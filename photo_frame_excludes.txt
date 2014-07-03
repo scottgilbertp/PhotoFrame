@@ -1,0 +1,6 @@
+# exclude pictures of kristi's toe surgery
+*2002-10-*
+
+# exclude Rebecca's post-heart-surgery pics
+*2007-06-30*
+*2007-07-08*
