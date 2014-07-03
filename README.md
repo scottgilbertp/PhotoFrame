@@ -3,10 +3,10 @@ PhotoFrame
 
 Digital Photo Frame for Raspberry Pi
 
-###Requirements:
+#####Requirements:
 - fbi - framebuffer image viewer  
 
-###Files:
+#####Files:
 - crontab - example crontab implementation  
 - photo_frame_start.sh  - script to turn on display, select images and start displaying them  
 - photo_frame_stop.sh - script to stop displaying images and turn off display  
