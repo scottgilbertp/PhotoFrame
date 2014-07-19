@@ -27,7 +27,7 @@ FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
 IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 1000)"
 
 # Include 300 "good" pictures (ie: have an 'a' appended to filename suggesting they have been edited)
-FINDCMD="$FIND ./ $EXCLUDES ! -path 'Jaques' -iname '*a.j*g' -print"
+FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
 # Include 300 "most recent" pictures (from the last 180 days)
