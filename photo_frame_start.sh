@@ -43,7 +43,7 @@ FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -path '*-$(date +%m-%d)*' -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
 
 # For debugging purposes, log IMAGES list to file:
-echo $IMAGES > /var/log/photo_frame_image_list-$(date +%d).log
+echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 
 # turn on display
 /usr/bin/tvservice -p
