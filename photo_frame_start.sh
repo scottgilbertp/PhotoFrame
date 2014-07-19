@@ -28,11 +28,11 @@ IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 1000)"
 
 # Include 300 "good" pictures (ie: have an 'a' appended to filename suggesting they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*a.j*g' -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 500)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
 # Include 300 "most recent" pictures (from the last 180 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -180 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 500)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
 # Include (up to) 200 "most most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
