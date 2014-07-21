@@ -30,17 +30,19 @@ IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 1000)"
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
-# Include 300 "most recent" pictures (from the last 180 days)
+# Include 200 "recent" pictures (from the last 180 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -180 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
 
-# Include (up to) 200 "most most recent" pictures (from the last 10 days)
+# Include (up to) 200 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
 
-# Include (up to) 200 pictures from "same day of the year as today"
-FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -path '*-$(date +%m-%d)*' -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
+# Include (up to) 300 pictures from "same day of the year (+/- 1 day) as today"
+DATES="\( -path '*-$(date +%m-%d)*' -or -path '*-$(date --date=yesterday +%m-%d)*' \
+      -or -path '*-$(date --date=tomorrow +%m-%d)*' \)"
+FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
 # For debugging purposes, log IMAGES list to file:
 echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
