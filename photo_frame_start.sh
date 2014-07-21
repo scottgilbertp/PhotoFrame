@@ -44,6 +44,9 @@ DATES="\( -path '*-$(date +%m-%d)*' -or -path '*-$(date --date=yesterday +%m-%d)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
+# Remove duplicate listings and randomize image list
+IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R)
+
 # For debugging purposes, log IMAGES list to file:
 echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 
@@ -60,4 +63,4 @@ echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 #  -noverbose = do not display status info at bottom of screen
 
 #/usr/bin/fbi -T 1 -noverbose -a -t 30 -u $IMAGES
-/usr/bin/fbi -T 1 -a -t 30 -u $IMAGES
+/usr/bin/fbi -T 1 -a -t 30 $IMAGES
