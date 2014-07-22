@@ -9,7 +9,7 @@ HOUR="$(date +%H)"
 
 if [ $HOUR -gt "06" ] && [ $HOUR -lt "22" ]; then
   echo "We rebooted! Hour is $HOUR, so photo frame is starting..."
-  /root/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
+  /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
   echo "We rebooted! Hour is $HOUR, so photo frame is NOT starting..."
 fi

@@ -20,9 +20,9 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-30 06 * * * /root/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log 
-00 22 * * * /root/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log 
+30 06 * * * /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log 
+00 22 * * * /root/photo_frame/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log 
 
 # At boot time, wait a bit to let time be set properly, then decide whether to start photoframe
-@reboot    sleep 60; /root/photo_frame_boot_start.sh 2>&1 >> /var/log/photo_frame.log
+@reboot    sleep 60; /root/photo_frame/photo_frame_boot_start.sh 2>&1 >> /var/log/photo_frame.log
 
