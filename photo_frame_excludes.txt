@@ -6,11 +6,11 @@
 *2007-07-08*
 
 # exclude great grandmother's funeral photos  
-*Jaques_Family_Photos_CD*0366* 
+*Jaques_Family_Photos_CD*0366*
 *Jaques_Family_Photos_CD*0368*
-*Jaques_Family_Photos_CD*0370* 
+*Jaques_Family_Photos_CD*0370*
 *Jaques_Family_Photos_CD*0371*
 *Jaques_Family_Photos_CD*0379*
-*Jaques_Family_Photos_CD*0391* 
-*Jaques_Family_Photos_CD*0396* 
-*Jaques_Family_Photos_CD*0400* 
+*Jaques_Family_Photos_CD*0391*
+*Jaques_Family_Photos_CD*0396*
+*Jaques_Family_Photos_CD*0400*
