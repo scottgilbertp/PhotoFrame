@@ -17,7 +17,10 @@ NEWL=$(echo -en "\n\b")
 # Build "find" parameters incorporating the patterns from the excludes file (skipping comments and blank lines)
 EXCLUDES=""
 while read line; do
-  if [[ $line != \#* ]] && [ "$line" != "" ] ; then
+  # strip off any stray trailing blanks
+  line="$(echo "$line" | sed 's/ *$//')"
+
+  if [[ $line != \#*  &&  ! "$line" == "" ]] ; then
     EXCLUDES="$EXCLUDES ! -path '${line}'"
   fi
 done < $EXCLUDESFILE
