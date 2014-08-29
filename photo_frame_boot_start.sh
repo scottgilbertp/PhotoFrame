@@ -7,7 +7,7 @@
 
 TIME=$(date +%H%M)
 
-if [ $TIME -gt 0630 ] && [ $TIME -lt 2200 ]; then
+if [[ $TIME -gt 0630 && $TIME -lt 2200 ]]; then
   echo "We rebooted! Time is $TIME, so photo frame is starting..."
   /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
