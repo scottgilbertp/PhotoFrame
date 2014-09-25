@@ -1,6 +1,6 @@
 # m h  dom mon dow   command
 
-30 06 * * * /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log 
+00 06 * * * /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log 
 00 22 * * * /root/photo_frame/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log 
 
 # At boot time, wait a bit to let time be set properly, then decide whether to start photoframe
