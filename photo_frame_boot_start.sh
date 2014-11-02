@@ -5,9 +5,12 @@
 # Note that the times here should correspond with the times that cron is starting 
 # and stopping the photo frame. 
 
-TIME=$(date +%H%M)
+# Times *must* not start with a leading zero, as this causes bash to interpret them
+# as octal instead of decimal.  For example, 6:00am must appear as "600" and NOT "0600".
 
-if [[ $TIME -gt 0600 && $TIME -lt 2200 ]]; then
+TIME=$(date +%_H%M)
+
+if [[ $TIME -gt 600 && $TIME -lt 2200 ]]; then
   echo "We rebooted! Time is $TIME, so photo frame is starting..."
   /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
