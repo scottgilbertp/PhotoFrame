@@ -8,7 +8,7 @@
 # Times *must* not start with a leading zero, as this causes bash to interpret them
 # as octal instead of decimal.  For example, 6:00am must appear as "600" and NOT "0600".
 
-TIME=$(date +%_H%M)
+TIME=$(date +%-H%M)
 
 if [[ $TIME -gt 600 && $TIME -lt 2200 ]]; then
   echo "We rebooted! Time is $TIME, so photo frame is starting..."
