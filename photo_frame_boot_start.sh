@@ -15,4 +15,6 @@ if [[ $TIME -gt 600 && $TIME -lt 2200 ]]; then
   /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
   echo "We rebooted! Time is $TIME, so photo frame is NOT starting..."
+  # run the "stop" script to turn off the display
+  /root/photo_frame/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log
 fi
