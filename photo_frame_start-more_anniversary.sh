@@ -33,9 +33,9 @@ IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
 
-# Include 200 "recent" pictures (from the last 180 days)
+# Include 100 "recent" pictures (from the last 180 days)
 #FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -180 -print"
-#IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
+#IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
 
 # Include (up to) 200 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
