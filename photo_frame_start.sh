@@ -1,1 +1,1 @@
-photo_frame_start-default.sh
+photo_frame_start-more_anniversary.sh
