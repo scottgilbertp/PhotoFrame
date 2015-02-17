@@ -31,34 +31,36 @@ while read line; do
   fi
 done < $EXCLUDESFILE
 
+IMAGES=''
+
 # Include 100 "good" pictures (ie: have an 'a' appended to filename suggesting they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
-IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 100)"
 
 # Include (up to) 200 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 200)"
 
 # Include (up to) 1000 pictures from "same day of the year (+/- 1 day) as today"
 DATES="\( -path '*-$(date +%m-%d)*' -or -path '*-$(date --date=yesterday +%m-%d)*' \
       -or -path '*-$(date --date=tomorrow +%m-%d)*' \)"
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 1000)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 1000)"
 
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
 
-# Include enough random pictures to reach goal
+# Include enough random pictures to reach target number of pics
 [[ $DEBUG -eq 1 ]] && echo "Number of pics before random: $(echo "$IMAGES" | wc -l)"
 IMGCOUNT=$(echo "$IMAGES" | wc -l) 
 if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
   [[ $DEBUG -eq 1 ]] && echo "RANDOMPICS: ${RANDOMPICS}"
   FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
-  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n ${RANDOMPICS})"
+  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $RANDOMPICS)"
 fi
 
-[[ $DEBUG -eq 1 ]] && echo "Number of pics after random, but before removal of dups: $(echo "$IMAGES" | wc -l)"
+[[ $DEBUG -eq 1 ]] && echo "pics after random, but before removal of dups: $(echo "$IMAGES" | wc -l)"
 
 # Remove duplicate listings and randomize image list
 IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R)
@@ -80,5 +82,4 @@ echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 #  -u     = randomize order of images
 #  -noverbose = do not display status info at bottom of screen
 
-#/usr/bin/fbi -T 1 -noverbose -a -t 30 -u $IMAGES
 /usr/bin/fbi -T 1 -a -t 30 $IMAGES
