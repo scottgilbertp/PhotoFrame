@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Total number of pictures to select
+TOTALPICS=1500
+
+# Set DEBUG to 1 for debug messages, anything else to turn off debug
+DEBUG=0
+
 FIND='/usr/bin/find'
 EXCLUDESFILE='/root/photo_frame/photo_frame_excludes.txt'
 
@@ -25,17 +31,9 @@ while read line; do
   fi
 done < $EXCLUDESFILE
 
-# Include 100 random pictures
-FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
-IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
-
 # Include 100 "good" pictures (ie: have an 'a' appended to filename suggesting they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
-
-# Include 100 "recent" pictures (from the last 180 days)
-#FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -180 -print"
-#IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
+IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 100)"
 
 # Include (up to) 200 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
@@ -47,10 +45,27 @@ DATES="\( -path '*-$(date +%m-%d)*' -or -path '*-$(date --date=yesterday +%m-%d)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 1000)"
 
+# Remove duplicates
+IMAGES=$(echo "$IMAGES" | sort | uniq)
+
+# Include enough random pictures to reach goal
+[[ $DEBUG -eq 1 ]] && echo "Number of pics before random: $(echo "$IMAGES" | wc -l)"
+IMGCOUNT=$(echo "$IMAGES" | wc -l) 
+if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
+  RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
+  [[ $DEBUG -eq 1 ]] && echo "RANDOMPICS: ${RANDOMPICS}"
+  FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
+  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n ${RANDOMPICS})"
+fi
+
+[[ $DEBUG -eq 1 ]] && echo "Number of pics after random, but before removal of dups: $(echo "$IMAGES" | wc -l)"
+
 # Remove duplicate listings and randomize image list
 IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R)
+[[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
+[[ $DEBUG -eq 1 ]] && exit 99
 
-# For debugging purposes, log IMAGES list to file:
+# Log IMAGES list to file:
 echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 
 # turn on display
