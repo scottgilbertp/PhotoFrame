@@ -41,11 +41,11 @@ IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 100)"
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 200)"
 
-# Include (up to) 1000 pictures from "same day of the year (+/- 1 day) as today"
+# Include (up to) TOTALPICS pictures from "same day of the year (+/- 1 day) as today"
 DATES="\( -path '*-$(date +%m-%d)*' -or -path '*-$(date --date=yesterday +%m-%d)*' \
       -or -path '*-$(date --date=tomorrow +%m-%d)*' \)"
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 1000)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $TOTALPICS)"
 
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
@@ -63,7 +63,7 @@ fi
 [[ $DEBUG -eq 1 ]] && echo "pics after random, but before removal of dups: $(echo "$IMAGES" | wc -l)"
 
 # Remove duplicate listings and randomize image list
-IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R)
+IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
 [[ $DEBUG -eq 1 ]] && exit 99
 
