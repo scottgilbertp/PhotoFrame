@@ -83,4 +83,4 @@ echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 #  -noverbose = do not display status info at bottom of screen
 #  -f 'font' = specify font to use for status info
 
-/usr/bin/fbi -T 1 -a -t 30 -f 'DejaVu Sans Mono-22' $IMAGES
+/usr/bin/fbi -T 1 -a -t 30 -f 'DejaVu Sans Mono-23' $IMAGES
