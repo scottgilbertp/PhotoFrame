@@ -82,5 +82,7 @@ echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 #  -u     = randomize order of images
 #  -noverbose = do not display status info at bottom of screen
 #  -f 'font' = specify font to use for status info
+#  -readahead = "read ahead images into cache" (pre-fetches next image immediately after showing current image)
+#  -blend = image blend time in milliseconds
 
-/usr/bin/fbi -T 1 -a -t 30 -f 'DejaVu Sans Mono-23' $IMAGES
+/usr/bin/fbi -T 1 -a -t 30 -f 'DejaVu Sans Mono-23' -readahead -blend 500 $IMAGES
