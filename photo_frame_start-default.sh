@@ -6,15 +6,18 @@ EXCLUDESFILE='/root/photo_frame/photo_frame_excludes.txt'
 # cd to the base dir of the images so the relative path is shorter
 cd /mnt/wizhome/scottg/Photos/
 
-# Set "field separater" to end of line to allow spaces and other special chars in filepaths
+# Set "field separater" to end of line to allow spaces and other special chars
+# in filepaths
 IFS=$(echo -en "\n\b")
 NEWL=$(echo -en "\n\b")
 
-# Note: keep the total number of images select below a few thousand to keep from exceeding max argument length
-#       If one is displaying 2 images per minute, then only 2880 images will be displayed in 24 hours.
-#       Therefore there is no benefit to including more images than that in the list.
+# Note: keep the total number of images select below a few thousand to keep from
+#       exceeding max argument length. If one is displaying 2 images per minute, 
+#       then only 2880 images will be displayed in 24 hours. Therefore there is 
+#       no benefit to including more images than that in the list.
 
-# Build "find" parameters incorporating the patterns from the excludes file (skipping comments and blank lines)
+# Build "find" parameters incorporating the patterns from the excludes file 
+# (skipping comments and blank lines)
 EXCLUDES=""
 while read line; do
   # strip off any stray trailing blanks
@@ -29,7 +32,8 @@ done < $EXCLUDESFILE
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
 IMAGES="$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 1000)"
 
-# Include 300 "good" pictures (ie: have an 'a' appended to filename suggesting they have been edited)
+# Include 300 "good" pictures (ie: have an 'a' appended to filename suggesting
+# they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"
 
@@ -42,7 +46,8 @@ FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 200)"
 
 # Include (up to) 300 pictures from "same day of the year (+/- 1 day) as today"
-DATES="\( -path '*-$(date +%m-%d)*' -or -path '*-$(date --date=yesterday +%m-%d)*' \
+DATES="\( -path '*-$(date +%m-%d)*' \
+      -or -path '*-$(date --date=yesterday +%m-%d)*' \
       -or -path '*-$(date --date=tomorrow +%m-%d)*' \)"
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD |/usr/bin/sort -R|/usr/bin/head -n 300)"

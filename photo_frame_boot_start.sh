@@ -1,12 +1,14 @@
 #!/bin/bash
-# This only runs at boot time and decides whether the photo frame should be started or not
-# If the time of the day is 6:00am or later AND before 10:00pm then start
+# This only runs at boot time and decides whether the photo frame should be
+# started or not. If the time of the day is 6:00am or later AND before 10:00pm,
+# then start, else just exit.
 
-# Note that the times here should correspond with the times that cron is starting 
-# and stopping the photo frame. 
+# Note that the times here should correspond with the times that cron is 
+# starting and stopping the photo frame. 
 
-# Times *must* not start with a leading zero, as this causes bash to interpret them
-# as octal instead of decimal.  For example, 6:00am must appear as "600" and NOT "0600".
+# Times *must* not start with a leading zero, as this causes bash to interpret
+# them as octal instead of decimal.  For example, 6:00am must appear as "600" 
+#  and NOT "0600".
 
 TIME=$(date +%-H%M)
 
