@@ -6,13 +6,14 @@
 # Note that the times here should correspond with the times that cron is 
 # starting and stopping the photo frame. 
 
-# Times *must* not start with a leading zero, as this causes bash to interpret
-# them as octal instead of decimal.  For example, 6:00am must appear as "600" 
-#  and NOT "0600".
+# Note: If time starts with a leading zero, bash wants to interpret it as
+# octal. So, for example, a time of "0900" (which is not a valid octal number)
+# causes problems.  To prevent this, the time is forced to be interpreted as 
+# decimal in the comparisons by prefixing the variable with '10#'.
 
-TIME=$(date +%-H%M)
+TIME=$(date +%H%M)
 
-if [[ $TIME -gt 600 && $TIME -lt 2200 ]]; then
+if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2200 ]]; then
   echo "We rebooted! Time is $TIME, so photo frame is starting..."
   /root/photo_frame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
