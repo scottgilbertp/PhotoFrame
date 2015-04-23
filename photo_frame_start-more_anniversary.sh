@@ -93,4 +93,4 @@ echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 #               immediately after showing current image)
 #  -blend = image blend time in milliseconds
 
-$FBI -T 1 -a -t 30 -f 'DejaVu Sans Mono-23' -readahead -blend 500 $IMAGES
+$FBI -T 1 -a -t 30 -f 'DejaVu Sans Mono-23' -readahead -blend 750 $IMAGES
