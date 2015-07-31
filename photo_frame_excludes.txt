@@ -14,3 +14,6 @@
 *Jaques_Family_Photos_CD*0391*
 *Jaques_Family_Photos_CD*0396*
 *Jaques_Family_Photos_CD*0400*
+
+# exclude pictures of Scotts swollen eye
+*2011-07-30*
