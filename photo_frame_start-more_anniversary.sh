@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Total number of pictures to select
-TOTALPICS=1500
+TOTALPICS=2000
 
 # Set DEBUG to 1 for debug messages, anything else to turn off debug
 DEBUG=0
@@ -42,9 +42,9 @@ IMAGES=''
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 100)"
 
-# Include (up to) 200 "most recent" pictures (from the last 10 days)
+# Include (up to) 400 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 200)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 400)"
 
 # Include (up to) TOTALPICS pictures from "same day of the year (+/- 1 day)"
 DATES="\( -path '*-$(date +%m-%d)*' \
