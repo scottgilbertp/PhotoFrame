@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Total number of pictures to select
-TOTALPICS=2000
+# (we currently display photos for 16 hours/day and 
+#  average 100 photos/hour.)
+TOTALPICS=1700
 
 # Set DEBUG to 1 for debug messages, anything else to turn off debug
 DEBUG=0
