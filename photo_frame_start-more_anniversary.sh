@@ -78,8 +78,9 @@ IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
 echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 
 # Generate web page list of today's images
+echo "<h2> $(date +'%A %F') </h2> <br>" > /usr/share/nginx/www/index.html
 echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
-  | nl > /usr/share/nginx/www/index.html
+  | nl >> /usr/share/nginx/www/index.html
 
 # turn on display
 /usr/bin/tvservice -p
