@@ -5,6 +5,7 @@ Digital Photo Frame for Raspberry Pi
 
 #####Requirements:
 - fbi - framebuffer image viewer  
+- gawk - gnu awk processor (plain awk does not work)
 
 #####Files:
 - crontab - example crontab implementation  
