@@ -58,11 +58,11 @@ IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $TOTALPICS)"
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
 
-# Include enough random pictures to reach target number of pics
+# Include enough random pictures to reach target number of pics (plus 10% to compensate for removal of dups)
 [[ $DEBUG -eq 1 ]] && echo "Num of pics before random: $(echo "$IMAGES"|wc -l)"
 IMGCOUNT=$(echo "$IMAGES" | wc -l) 
 if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
-  RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
+  RANDOMPICS=$(($TOTALPICS + $TOTALPICS/10 - $IMGCOUNT))
   [[ $DEBUG -eq 1 ]] && echo "RANDOMPICS: ${RANDOMPICS}"
   FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $RANDOMPICS)"
