@@ -37,12 +37,11 @@ while read line; do
   fi
 done < $EXCLUDESFILE
 
-IMAGES=''
 
 #  Include 100 "good" pictures (ie: have an 'a' appended to filename suggesting
 #  they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 100)"
+IMAGES="$(eval $FINDCMD | sort -R | head -n 100)"
 
 # Include (up to) 400 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
