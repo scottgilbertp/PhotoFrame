@@ -80,10 +80,13 @@ IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
 echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 
 # Generate web page list of today's images
+# note: Assumes that images will be displayed for an average of 36.2 seconds
+#       each. This time includes: intentional display time, load time, 
+#       scaling time, and blend time.
 echo "<h2> $(date +'%A %F') </h2> <br>" > /usr/share/nginx/www/index.html
 echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
   | nl \
-  | gawk '{print strftime("%H:%M - ",systime() + ($1 * 36) ),$0 ; }' \
+  | gawk '{print strftime("%H:%M - ",systime() + ($1 * 36.2) ),$0 ; }' \
   >> /usr/share/nginx/www/index.html
 
 # turn on display
