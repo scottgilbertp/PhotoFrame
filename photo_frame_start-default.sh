@@ -18,7 +18,8 @@ cd /mnt/wizhome/scottg/Photos/
 # Set "field separater" to end of line to allow spaces and other special chars
 # in filepaths
 IFS=$(echo -en "\n\b")
-NEWL=$(echo -en "\n\b")
+NEWL=$'\n'
+
 
 # Note: keep the total number of images select below a few thousand to keep from
 #       exceeding max argument length. If one is displaying 2 images per minute,
