@@ -17,7 +17,7 @@ cd /mnt/wizhome/scottg/Photos/
 
 # Set "field separater" to end of line to allow spaces and other special chars
 # in filepaths
-IFS=$(echo -en "\n\b")
+IFS=$'\n\b'
 NEWL=$'\n'
 
 # Note: keep the total number of images select below a few thousand to keep from
@@ -70,12 +70,6 @@ fi
 
 [[ $DEBUG -eq 1 ]] && echo "Num of pics before removal of dups: \
   $(echo "$IMAGES" | wc -l)"
-
-# For reasons not yet known, I'm getting a few stray ^H chars in the image list.
-# Strip them out here:
-# (commented out for now, as I think this has been fixed by changing how
-#  the NEWL variable is assigned)
-#IMAGES=$(echo "$IMAGES"|sed 's/^H//') 
 
 # Remove duplicate listings and randomize image list
 IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)

@@ -17,7 +17,7 @@ cd /mnt/wizhome/scottg/Photos/
 
 # Set "field separater" to end of line to allow spaces and other special chars
 # in filepaths
-IFS=$(echo -en "\n\b")
+IFS=$'\n\b'
 NEWL=$'\n'
 
 
