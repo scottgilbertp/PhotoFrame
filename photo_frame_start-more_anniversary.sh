@@ -48,9 +48,14 @@ FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 400)"
 
 # Include (up to) TOTALPICS pictures from "same day of the year (+/- 1 day)"
+# (match either dates with '-' separaters OR no separators and trailing underscore)
 DATES="\( -path '*-$(date +%m-%d)*' \
       -or -path '*-$(date --date=yesterday +%m-%d)*' \
-      -or -path '*-$(date --date=tomorrow +%m-%d)*' \)"
+      -or -path '*-$(date --date=tomorrow +%m-%d)*' \
+      -or -path '*$(date +%m%d)_*' \
+      -or -path '*$(date --date=yesterday +%m%d)_*' \
+      -or -path '*$(date --date=tomorrow +%m%d)_*' \)"
+
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
 IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $TOTALPICS)"
 
