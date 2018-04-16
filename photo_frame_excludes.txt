@@ -17,3 +17,6 @@
 
 # exclude pictures of Scotts swollen eye
 *2011-07-30*
+
+# exclude tombstones
+*2018-04-15?10.2*
