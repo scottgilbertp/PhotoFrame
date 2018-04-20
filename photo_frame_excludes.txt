@@ -20,3 +20,6 @@
 
 # exclude tombstones
 *2018-04-15?10.2*
+
+# exclude jakes nose picking goals
+*2018-04-19?17.11.18*
