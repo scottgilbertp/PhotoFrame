@@ -22,4 +22,4 @@ There are different versions of the photo_frame_start.sh start script with diffe
 
 The "*_start.sh" scripts select a list of photos and displays them.  It also generates an html version of the list of photos, suitable for display by any webserver. The default location to write this file is /usr/share/nginx/www/index.html. It also produces a simple text list of photos, written to /var/log/photo_frame_image_list-$(date +%d).log. Note that this file contains the "day of month", so only about one month's of log files are kept - with older ones being overwritten by newer ones.
 
-There are a lot of things that are "hard coded", which really should be defined in a config file of some sort. Maybe someday, I'll tidy this up.
+There are a lot of things that are "hard coded", which really should be defined in a config file of some sort. Maybe someday, I'll tidy this up.  See the BUGS.txt file for more details.

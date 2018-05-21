@@ -1,0 +1,55 @@
+This code has a bunch of built-in assumptions, limitations, and just bad
+choices. 
+
+Here I will try to document these various "flaws":
+
+Location of photos is hardcoded.  Photos are assumed to reside under the 
+/mnt/wizhome/scottg/Photos directory.
+
+"Good" photos are assumed to have a "a" suffix, which used to be a convention
+we used whenever we editted a photo.
+
+There is some "hardcoding" of file paths including the text "Jaques".
+
+The number of photos to be selected for each run is set using an environment
+variable early in the script.  This would be a perfect candidate to move out
+into a config file.
+
+Location of "excludes file" is hardcoded. Another easy move to a config file.
+
+Location of the day's list of images is hardcoded.  It should probably be
+optional, and the location configurable.
+
+Location of the general log file is hardcoded.  It should probably be
+optional, and the location configurable rather than hardcoded in several
+places. 
+
+Location of the HTML page of the day's images is hardcoded.  It should probably
+be optional, and the location configurable.
+
+The start script calls "fbset" twice, once with a depth of 8 and then with a 
+depth of 16.  Is there any reason not to eliminate the first one?
+
+Photos are assumed to be in jpeg format (more specifically, only files ending
+with the glob ".j*g" are selected.
+
+Photos are assumed to have the date they were taken somewhere in their path.
+(typically either in a directory named with the date, or the filename itself)
+
+Inconsistency:  "recent" pictures are determined based on file mtime.  But, 
+anniversay pictures are determed based on directory/file name, ignoring mtime.
+
+Anniversary pictures are hardcoded for "today's date plus or minus one day". It
+would be nice to have this range be configurable.
+
+Different photo selection criteria are chosen by creating a different hard-
+coded script and changing a symlink to point to the new code.  It would be nice
+to remove all of the hard-coding of the script, and replacing it with a "config
+file".  One could then have different versions of the config file instead of 
+different versions of the script.
+
+The timing of when photo display starts and stops is defined by both a cron job
+AND in the photo_frame_boot_start.sh script.  It would be nice to have a way to
+define this timing in just one place to eliminate the opportunity for
+inconsistencies.
+
