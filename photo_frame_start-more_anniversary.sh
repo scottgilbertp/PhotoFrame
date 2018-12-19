@@ -10,7 +10,7 @@ DEBUG=0
 
 FBI='/usr/bin/fbi'
 FIND='/usr/bin/find'
-EXCLUDESFILE='/root/photo_frame/photo_frame_excludes.txt'
+EXCLUDESFILE='/root/PhotoFrame/photo_frame_excludes.txt'
 
 # cd to the base dir of the images so the relative path is shorter
 cd /mnt/wizhome/scottg/Photos/
