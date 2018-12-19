@@ -42,11 +42,11 @@ done < $EXCLUDESFILE
 #  Include 100 "good" pictures (ie: have an 'a' appended to filename suggesting
 #  they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
-IMAGES="$(eval $FINDCMD | sort -R | head -n 100)"
+IMAGES="$(eval $FINDCMD | shuf -n 100)"
 
 # Include (up to) 400 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 400)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n 400)"
 
 # Include (up to) TOTALPICS pictures from "same day of the year (+/- 1 day)"
 # (match either dates with '-' separaters OR no separators and trailing underscore)
@@ -58,7 +58,7 @@ DATES="\( -path '*-$(date +%m-%d)*' \
       -or -path '*$(date --date=tomorrow +%m%d)_*' \)"
 
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $TOTALPICS)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $TOTALPICS)"
 
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
@@ -71,14 +71,14 @@ if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS + $TOTALPICS/10 - $IMGCOUNT))
   [[ $DEBUG -eq 1 ]] && echo "RANDOMPICS: ${RANDOMPICS}"
   FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
-  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $RANDOMPICS)"
+  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $RANDOMPICS)"
 fi
 
 [[ $DEBUG -eq 1 ]] && echo "Num of pics before removal of dups: \
   $(echo "$IMAGES" | wc -l)"
 
 # Remove duplicate listings and randomize image list
-IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
+IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
 [[ $DEBUG -eq 1 ]] && exit 99
 

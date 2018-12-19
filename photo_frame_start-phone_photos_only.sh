@@ -30,18 +30,18 @@ NEWL=$'\n'
 
 # Include 900 random kristi pictures
 IMAGES="$(/usr/bin/find ./kristi\'s\ phone\ photos\ from\ dropbox/ \
-       -iname '*.j*g' -print |/usr/bin/sort -R|/usr/bin/head -n 800)"
+       -iname '*.j*g' -print | shuf -n 800)"
 
 # Include 900 random scott pictures
 IMAGES="$IMAGES $(/usr/bin/find ./iPhone_photos/ -iname '*.j*g' \
-       -print |/usr/bin/sort -R|/usr/bin/head -n 800)"
+       -print | shuf -n 800)"
 
 
 [[ $DEBUG -eq 1 ]] && echo "Num of pics before removal of dups: \
   $(echo "$IMAGES" | wc -l)"
 
 # Remove duplicate listings and randomize image list
-IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
+IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
 [[ $DEBUG -eq 1 ]] && exit 99
 

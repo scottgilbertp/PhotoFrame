@@ -43,22 +43,22 @@ done < $EXCLUDESFILE
 #  Include 300 "good" pictures (ie: have an 'a' appended to filename suggesting
 #  they have been edited)
 FINDCMD="$FIND ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
-IMAGES="$(eval $FINDCMD | sort -R | head -n 300)"
+IMAGES="$(eval $FINDCMD | shuf -n 300)"
 
 # Include (up to) 200 "recent" pictures (from the last 180 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -180 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 200)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n 200)"
 
 # Include (up to) 200 "most recent" pictures (from the last 10 days)
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -mtime -10 -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 200)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n 200)"
 
 # Include (up to) 300 pictures from "same day of the year (+/- 1 day)"
 DATES="\( -path '*-$(date +%m-%d)*' \
       -or -path '*-$(date --date=yesterday +%m-%d)*' \
       -or -path '*-$(date --date=tomorrow +%m-%d)*' \)"
 FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
-IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n 300)"
+IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n 300)"
 
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
@@ -71,14 +71,14 @@ if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS + $TOTALPICS/10 - $IMGCOUNT))
   [[ $DEBUG -eq 1 ]] && echo "RANDOMPICS: ${RANDOMPICS}"
   FINDCMD="$FIND ./ $EXCLUDES -iname '*.j*g' -print"
-  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | sort -R | head -n $RANDOMPICS)"
+  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $RANDOMPICS)"
 fi
 
 [[ $DEBUG -eq 1 ]] && echo "Num of pics before removal of dups: \
   $(echo "$IMAGES" | wc -l)"
 
 # Remove duplicate listings and randomize image list
-IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
+IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
 [[ $DEBUG -eq 1 ]] && exit 99
 
