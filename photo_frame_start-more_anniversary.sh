@@ -11,6 +11,7 @@ DEBUG=0
 FBI='/usr/bin/fbi'
 FIND='/usr/bin/find'
 EXCLUDESFILE='/root/PhotoFrame/photo_frame_excludes.txt'
+HTMLFILE='/var/www/html/index.html'
 
 # cd to the base dir of the images so the relative path is shorter
 cd /mnt/wizhome/scottg/Photos/
@@ -88,11 +89,11 @@ echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 # note: Assumes that images will be displayed for an average of 36.2 seconds
 #       each. This time includes: intentional display time, load time, 
 #       scaling time, and blend time.
-echo "<h2> $(date +'%A %F') </h2> <br>" > /usr/share/nginx/www/index.html
+echo "<h2> $(date +'%A %F') </h2> <br>" > "$HTMLFILE"
 echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
   | nl \
   | gawk '{print strftime("%H:%M - ",systime() + ($1 * 36.2) ),$0 ; }' \
-  >> /usr/share/nginx/www/index.html
+  >> "$HTMLFILE"
 
 # turn on display
 /usr/bin/tvservice -p

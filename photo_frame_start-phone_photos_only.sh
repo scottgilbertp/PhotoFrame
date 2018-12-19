@@ -11,6 +11,7 @@ DEBUG=0
 FBI='/usr/bin/fbi'
 FIND='/usr/bin/find'
 EXCLUDESFILE='/root/PhotoFrame/photo_frame_excludes.txt'
+HTMLFILE='/var/www/html/index.html'
 
 # cd to the base dir of the images so the relative path is shorter
 cd /mnt/wizhome/scottg/Photos/
@@ -48,11 +49,11 @@ IMAGES=$(echo "$IMAGES" | sort | uniq | sort -R | head -n $TOTALPICS)
 echo "$IMAGES" > /var/log/photo_frame_image_list-$(date +%d).log
 
 # Generate web page list of today's images
-echo "<h2> $(date +'%A %F') </h2> <br>" > /usr/share/nginx/www/index.html
+echo "<h2> $(date +'%A %F') </h2> <br>" > "$HTMLFILE"
 echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
   | nl \
   | gawk '{print strftime("%H:%M - ",systime() + ($1 * 36) ),$0 ; }' \
-  >> /usr/share/nginx/www/index.html
+  >> "$HTMLFILE"
 
 # turn on display
 /usr/bin/tvservice -p
