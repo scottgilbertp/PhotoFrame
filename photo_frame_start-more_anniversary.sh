@@ -103,7 +103,7 @@ echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
 # fbi parms:
 #  -T 1   = display on first console
 #  -a     = autoscale images to display size
-#  -t 30  = display each image for 30 seconds
+#  -t 33  = display each image for 33 seconds
 #  -u     = randomize order of images
 #  -noverbose = do not display status info at bottom of screen
 #  -f 'font' = specify font to use for status info
@@ -111,4 +111,4 @@ echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
 #               immediately after showing current image)
 #  -blend = image blend time in milliseconds
 
-$FBI -T 1 -a -t 30 -f 'DejaVu Sans Mono-23' -readahead -blend 750 $IMAGES
+$FBI -T 1 -a -t 33 -f 'DejaVu Sans Mono-23' -readahead -blend 750 $IMAGES
