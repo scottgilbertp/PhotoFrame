@@ -15,8 +15,6 @@ The number of photos to be selected for each run is set using an environment
 variable early in the script.  This would be a perfect candidate to move out
 into a config file.
 
-Location of "excludes file" is hardcoded. Another easy move to a config file.
-
 Location of the day's list of images is hardcoded.  It should probably be
 optional, and the location configurable.
 

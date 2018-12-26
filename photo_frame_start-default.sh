@@ -8,9 +8,13 @@ TOTALPICS=1700
 # Set DEBUG to 1 for debug messages, anything else to turn off debug
 DEBUG=0
 
+# MYDIR is the directory of this script.
+# we assume that other files are in this same dir.
+MYDIR="${0%/*}"
+
 FBI='/usr/bin/fbi'
 FIND='/usr/bin/find'
-EXCLUDESFILE='/root/PhotoFrame/photo_frame_excludes.txt'
+EXCLUDESFILE="$MYDIR/photo_frame_excludes.txt"
 HTMLFILE='/var/www/html/index.html'
 
 # cd to the base dir of the images so the relative path is shorter

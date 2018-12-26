@@ -12,12 +12,15 @@
 # decimal in the comparisons by prefixing the variable with '10#'.
 
 TIME=$(date +%H%M)
+# MYDIR is the directory of this script.
+# we assume that other files are in this same dir.
+MYDIR="${0%/*}"
 
 if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2200 ]]; then
   echo "We rebooted! Time is $TIME, so photo frame is starting..."
-  /root/PhotoFrame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
+  $MYDIR/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
   echo "We rebooted! Time is $TIME, so photo frame is NOT starting..."
   # run the "stop" script to turn off the display
-  /root/PhotoFrame/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log
+  $MYDIR/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log
 fi
