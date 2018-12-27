@@ -17,9 +17,6 @@ FIND='/usr/bin/find'
 EXCLUDESFILE="$MYDIR/photo_frame_excludes.txt"
 HTMLFILE='/var/www/html/index.html'
 
-# cd to the base dir of the images so the relative path is shorter
-cd /mnt/wizhome/scottg/Photos/
-
 # Set "field separater" to end of line to allow spaces and other special chars
 # in filepaths
 IFS=$'\n\b'
@@ -42,6 +39,8 @@ while read line; do
   fi
 done < $EXCLUDESFILE
 
+# cd to the base dir of the images so the relative path is shorter
+cd /mnt/wizhome/scottg/Photos/
 
 #  Include 100 "good" pictures (ie: have an 'a' appended to filename suggesting
 #  they have been edited)
