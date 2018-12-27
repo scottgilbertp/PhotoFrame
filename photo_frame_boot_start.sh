@@ -12,9 +12,12 @@
 # decimal in the comparisons by prefixing the variable with '10#'.
 
 TIME=$(date +%H%M)
+
 # MYDIR is the directory of this script.
 # we assume that other files are in this same dir.
-MYDIR="${0%/*}"
+# (readlink is used to expand a possible relative path to an
+#  absolute path)
+MYDIR="$(readlink -f ${0%/*})"
 
 if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2200 ]]; then
   echo "We rebooted! Time is $TIME, so photo frame is starting..."
