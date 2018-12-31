@@ -20,6 +20,14 @@ anniversay pictures are determed based on directory/file name, ignoring mtime.
 Anniversary pictures are hardcoded for "today's date plus or minus one day". It
 would be nice to have this range be configurable.
 
+Photo selection is done by generating "find" commands.  In some cases, such as
+a large number of entries in the "excludes" file, this command could become 
+quite long - perhaps long enough to cause problems.
+
+Similarly, the day's list of photos to be displayed is passed to the image 
+display program ("fbi") on the command line.  This command too could become
+long enough to cause problems.
+
 The timing of when photo display starts and stops is defined by both a cron job
 AND in the photo_frame_boot_start.sh script.  It would be nice to have a way to
 define this timing in just one place to eliminate the opportunity for
