@@ -9,6 +9,7 @@ Digital Photo Frame for Raspberry Pi
 - nginx - webserver for display of today's list of images (optional)
 
 ### Installation
+ 1. Install default Raspbian (although other OS's should work with minimal adjustments)
  1. Install git and dependencies:  `apt install git fbi gawk nginx`
  1. Clone this repo: `git clone https://github.com/scottgilbert/PhotoFrame.git`
  1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, or whatever)
