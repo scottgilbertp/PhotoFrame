@@ -48,7 +48,7 @@ IMAGES=''
 #  Include NUM_PICS_GOOD "good" pictures (ie: have an 'a' appended to filename 
 #  suggesting they have been edited)
 if [[ $NUM_PICS_GOOD -gt 0 ]]; then
-  FINDCMD="find ./ $EXCLUDES ! -path '*Jaques*' -iname '*a.j*g' -print"
+  FINDCMD="find ./ $EXCLUDES $GOOD_PICS_ADDL_PARMS -iname '*a.j*g' -print"
   IMAGES="$(eval $FINDCMD | shuf -n $NUM_PICS_GOOD)"
 fi
 
@@ -57,7 +57,8 @@ fi
 # Include (up to) NUM_PICS_RECENT "recent" pictures 
 # ("recent" means within the last NUM_PICS_RECENT_DAYS days)
 if [[ $NUM_PICS_RECENT -gt 0 ]]; then
-  FINDCMD="find ./ $EXCLUDES -iname '*.j*g' -mtime -${NUM_PICS_RECENT_DAYS} -print"
+  FINDCMD="find ./ $EXCLUDES $RECENT_PICS_ADDL_PARMS -iname '*.j*g' \
+    -mtime -${NUM_PICS_RECENT_DAYS} -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_RECENT)"
 fi
 
@@ -73,7 +74,7 @@ if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
         -or -path '*$(date --date=yesterday +%m%d)_*' \
         -or -path '*$(date --date=tomorrow +%m%d)_*' \)"
 
-  FINDCMD="find ./ $EXCLUDES -iname '*.j*g' ${DATES} -print"
+  FINDCMD="find ./ $EXCLUDES $ANNIV_PICS_ADDL_PARMS -iname '*.j*g' ${DATES} -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_ANNIV)"
 fi
 
@@ -90,7 +91,7 @@ if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
   RANDOMPICS=$(($RANDOMPICS + $RANDOMPICS/10 + 1))
   [[ $DEBUG -eq 1 ]] && echo "Num of random pics to add: ${RANDOMPICS}"
-  FINDCMD="find ./ $EXCLUDES -iname '*.j*g' -print"
+  FINDCMD="find ./ $EXCLUDES $RAND_PICS_ADDL_PARMS -iname '*.j*g' -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $RANDOMPICS)"
 fi
 

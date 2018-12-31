@@ -1,5 +1,4 @@
-This code has a few of built-in assumptions, limitations, and just bad
-choices. 
+This code has a few built-in assumptions and limitations.
 
 Here I will try to document these various "flaws":
 
@@ -7,7 +6,7 @@ Here I will try to document these various "flaws":
 we used whenever we editted a photo. Over time, this is a less and less
 useful way to identify "good" photos.
 
-There is a little "hardcoding", such as the text "Jaques".
+Although I've removed most of it, there remains a little "hardcoding".
 
 Photos are assumed to be in jpeg format (more specifically, only files ending
 with the glob ".j*g" are selected.
@@ -28,4 +27,6 @@ inconsistencies.
 
 Sometimes after a reboot, photo_frame starts and runs normally, but no images
 are displayed.  Running the stop script followed by the start script resolves
-the problem.  I don't know what is causing this.
+the problem.  I don't know what is causing this. I've added a "chvt 2", which
+*seems* to solve this issue, but I still don't really understand the issue
+or why this would solve it.
