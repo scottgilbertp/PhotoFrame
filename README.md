@@ -18,16 +18,16 @@ Digital Photo Frame for Raspberry Pi
     Note that if you change the start/stop timing, you will also need to modify the photo_frame_boot_start.sh script
 
 ### Files:
-- crontab - example crontab implementation  
-- photo_frame.conf - config file 
-- photo_frame_start.sh  - script to turn on display, select images and start displaying them. (usually executed by a cron job)
-- photo_frame_stop.sh - script to stop displaying images and turn off display (usually executed by a cron job) 
-- photo_frame_boot_start.sh - script to run at boot time which considers the current time and decides whether or not to run photo_frame_start.sh  (executed by cron "@reboot" job or a system "init" mechanism)
-- photo_frame_excludes.txt - list of filepath globs to never show (may include comments preceeded with a "#")  
+- `crontab` - example crontab implementation  
+- `photo_frame.conf` - config file 
+- `photo_frame_start.sh`  - script to turn on display, select images and start displaying them. (usually executed by a cron job)
+- `photo_frame_stop.sh` - script to stop displaying images and turn off display (usually executed by a cron job) 
+- `photo_frame_boot_start.sh` - script to run at boot time which considers the current time and decides whether or not to run photo_frame_start.sh  (executed by cron "@reboot" job or a system "init" mechanism)
+- `photo_frame_excludes.txt` - list of filepath globs to never show (may include comments preceeded with a "#")  
 
 ### Notes:
-photo_frame_start.sh will accept a single parameter of a config file.  If no config file is specified, then the default (photo_frame.conf) is used.  Multiple config files could be created to provide different photo selections on different days.
+`photo_frame_start.sh` will accept a single parameter of a config file.  If no config file is specified, then the default (`photo_frame.conf`) is used.  Multiple config files could be created to provide different photo selections on different days.
 
-The photo_frame_start.sh script selects a list of photos and displays them.  It also generates an html version of the list of photos, suitable for display by any webserver, and also a simple text list Note that,by default, this file contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.
+The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of photos. In the default config, this file contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, suitable for display by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
 
 There are still a few things that are "hard coded". See the BUGS.txt file for other defects and limitations..
