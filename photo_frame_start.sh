@@ -83,13 +83,13 @@ fi
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
 
-# Include enough random pictures to reach target number of pics (plus 10% to
-# compensate for removal of dups)
+# Include enough random pictures to reach target number of pics 
+# (plus RAND_PICS_ADDL_PERCENT to compensate for removal of possible dups)
 [[ $DEBUG -eq 1 ]] && echo "Num of photos after removal of dups: $(echo "$IMAGES"|wc -l)"
 IMGCOUNT=$(echo "$IMAGES" | wc -l) 
 if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
-  RANDOMPICS=$(($RANDOMPICS + $RANDOMPICS/10 + 1))
+  RANDOMPICS=$(($RANDOMPICS + ( $RANDOMPICS * $RAND_PICS_ADDL_PERCENT / 100 ) + 1))
   [[ $DEBUG -eq 1 ]] && echo "Num of random pics to add: ${RANDOMPICS}"
   FINDCMD="find ./ $EXCLUDES $RAND_PICS_ADDL_PARMS -iname '*.j*g' -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $RANDOMPICS)"

@@ -6,8 +6,6 @@ Here I will try to document these various "flaws":
 we used whenever we editted a photo. Over time, this is a less and less
 useful way to identify "good" photos.
 
-Although I've removed most of it, there remains a little "hardcoding".
-
 Photos are assumed to be in jpeg format (more specifically, only files ending
 with the glob ".j*g" are selected.
 
