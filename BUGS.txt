@@ -18,13 +18,17 @@ anniversay pictures are determed based on directory/file name, ignoring mtime.
 Anniversary pictures are hardcoded for "today's date plus or minus one day". It
 would be nice to have this range be configurable.
 
-Photo selection is done by generating "find" commands.  In some cases, such as
-a large number of entries in the "excludes" file, this command could become 
-quite long - perhaps long enough to cause problems.
+The day's list of photos to be displayed is passed to the image display 
+program ("fbi") on the command line.  This command could become long 
+enough to cause problems. (Note: on my pi, "getconf ARG_MAX" returns
+2097152.  The size of a typical day's photo list of 1700 photos is 75-90kB, so
+I think the command length would have to be more than 20x longer before it hit
+the limit.)
 
-Similarly, the day's list of photos to be displayed is passed to the image 
-display program ("fbi") on the command line.  This command too could become
-long enough to cause problems.
+Similarly, photo selection is done by generating "find" commands.  In some 
+cases, such as a large number of entries in the "excludes" file, this command 
+could become quite long - perhaps long enough to cause problems. This should
+only be an issue if someone really "went overboard" with their excludes file.
 
 The timing of when photo display starts and stops is defined by both a cron job
 AND in the photo_frame_boot_start.sh script.  It would be nice to have a way to
