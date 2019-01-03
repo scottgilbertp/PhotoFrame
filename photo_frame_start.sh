@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "$(date +%F-%T) - Starting photo_frame"
+
 # MYDIR is the directory of this script.
 # we assume that other files are in this same dir.
 # (readlink is used to expand a possible relative path to an

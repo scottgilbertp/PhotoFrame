@@ -19,11 +19,13 @@ TIME=$(date +%H%M)
 #  absolute path)
 MYDIR="$(readlink -f ${0%/*})"
 
+echo -n "$(date +%F-%T) - We rebooted! Time is $TIME, so "
+
 if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2200 ]]; then
-  echo "We rebooted! Time is $TIME, so photo frame is starting..."
+  echo "photo frame is starting..."
   $MYDIR/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
-  echo "We rebooted! Time is $TIME, so photo frame is NOT starting..."
+  echo "photo frame is NOT starting..."
   # run the "stop" script to turn off the display
   $MYDIR/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log
 fi
