@@ -59,7 +59,7 @@ fi
 # Include (up to) NUM_PICS_RECENT "recent" pictures 
 # ("recent" means within the last NUM_PICS_RECENT_DAYS days)
 if [[ $NUM_PICS_RECENT -gt 0 ]]; then
-  FINDCMD="find ./ $EXCLUDES $RECENT_PICS_ADDL_PARMS -iname '*.j*g' \
+  FINDCMD="find ./ $EXCLUDES $RECENT_PICS_ADDL_PARMS $PHOTO_EXTS \
     -mtime -${NUM_PICS_RECENT_DAYS} -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_RECENT)"
 fi
@@ -76,7 +76,7 @@ if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
         -or -path '*$(date --date=yesterday +%m%d)_*' \
         -or -path '*$(date --date=tomorrow +%m%d)_*' \)"
 
-  FINDCMD="find ./ $EXCLUDES $ANNIV_PICS_ADDL_PARMS -iname '*.j*g' ${DATES} -print"
+  FINDCMD="find ./ $EXCLUDES $ANNIV_PICS_ADDL_PARMS $PHOTO_EXTS ${DATES} -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_ANNIV)"
 fi
 
@@ -93,7 +93,7 @@ if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
   RANDOMPICS=$(($RANDOMPICS + ( $RANDOMPICS * $RAND_PICS_ADDL_PERCENT / 100 ) + 1))
   [[ $DEBUG -eq 1 ]] && echo "Num of random pics to add: ${RANDOMPICS}"
-  FINDCMD="find ./ $EXCLUDES $RAND_PICS_ADDL_PARMS -iname '*.j*g' -print"
+  FINDCMD="find ./ $EXCLUDES $RAND_PICS_ADDL_PARMS $PHOTO_EXTS -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $RANDOMPICS)"
 fi
 
@@ -102,7 +102,9 @@ fi
 
 # Remove duplicate listings and randomize image list
 IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
+
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
+[[ $DEBUG -eq 1 ]] && echo "$IMAGES" > /tmp/photo_frame_debug_file_list.txt
 [[ $EXIT_AFTER_SELECT -eq 1 ]] && exit 50
 
 # Log IMAGES list to file:
