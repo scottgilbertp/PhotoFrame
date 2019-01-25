@@ -54,7 +54,8 @@ if [[ $NUM_PICS_GOOD -gt 0 ]]; then
   IMAGES="$(eval $FINDCMD | shuf -n $NUM_PICS_GOOD)"
 fi
 
-[[ $DEBUG -eq 1 ]] && echo "Num of photos selected after good: $(echo "$IMAGES"|wc -l)"
+[[ $DEBUG -eq 1 ]] && echo "Number of photos selected after adding up to " \
+                           "$NUM_PICS_GOOD good: $(echo "$IMAGES"|wc -l)"
 
 # Include (up to) NUM_PICS_RECENT "recent" pictures 
 # ("recent" means within the last NUM_PICS_RECENT_DAYS days)
@@ -64,7 +65,8 @@ if [[ $NUM_PICS_RECENT -gt 0 ]]; then
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_RECENT)"
 fi
 
-[[ $DEBUG -eq 1 ]] && echo "Num of photos selected after recent: $(echo "$IMAGES"|wc -l)"
+[[ $DEBUG -eq 1 ]] && echo "Number of photos selected after adding up to " \
+                           "$NUM_PICS_RECENT recent: $(echo "$IMAGES"|wc -l)"
 
 # Include (up to) NUM_PICS_ANNIV pictures from "same day of the year (+/- 1 day)"
 # (match either dates with '-' separaters OR no separators and trailing underscore)
@@ -80,31 +82,33 @@ if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_ANNIV)"
 fi
 
-[[ $DEBUG -eq 1 ]] && echo "Num of photos selected after anniv: $(echo "$IMAGES"|wc -l)"
+[[ $DEBUG -eq 1 ]] && echo "Number of photos selected after adding up to " \
+                           "$NUM_PICS_ANNIV anniv: $(echo "$IMAGES"|wc -l)"
 
 # Remove duplicates
 IMAGES=$(echo "$IMAGES" | sort | uniq)
 
 # Include enough random pictures to reach target number of pics 
 # (plus RAND_PICS_ADDL_PERCENT to compensate for removal of possible dups)
-[[ $DEBUG -eq 1 ]] && echo "Num of photos after removal of dups: $(echo "$IMAGES"|wc -l)"
+[[ $DEBUG -eq 1 ]] && echo "Number of photos after removal of dups: $(echo "$IMAGES"|wc -l)"
 IMGCOUNT=$(echo "$IMAGES" | wc -l) 
 if [[ $IMGCOUNT -lt $TOTALPICS ]] ; then
   RANDOMPICS=$(($TOTALPICS - $IMGCOUNT))
   RANDOMPICS=$(($RANDOMPICS + ( $RANDOMPICS * $RAND_PICS_ADDL_PERCENT / 100 ) + 1))
-  [[ $DEBUG -eq 1 ]] && echo "Num of random pics to add: ${RANDOMPICS}"
+  [[ $DEBUG -eq 1 ]] && echo "Number of random pics to add, to reach $TOTALPICS + " \
+                             "${RAND_PICS_ADDL_PERCENT}% : ${RANDOMPICS}"
   FINDCMD="find ./ $EXCLUDES $RAND_PICS_ADDL_PARMS $PHOTO_EXTS -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $RANDOMPICS)"
 fi
 
-[[ $DEBUG -eq 1 ]] && echo "Num of pics before removal of dups: \
-  $(echo "$IMAGES" | wc -l)"
+[[ $DEBUG -eq 1 ]] && echo "Number of pics before removal of dups: " \
+                           "$(echo "$IMAGES" | wc -l)"
 
 # Remove duplicate listings and randomize image list
 IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
 
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
-[[ $DEBUG -eq 1 ]] && echo "$IMAGES" > /tmp/photo_frame_debug_file_list.txt
+[[ $EXIT_AFTER_SELECT -eq 1 ]] && echo "$IMAGES" > /tmp/photo_frame_debug_file_list.txt
 [[ $EXIT_AFTER_SELECT -eq 1 ]] && exit 50
 
 # Log IMAGES list to file:
