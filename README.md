@@ -19,7 +19,7 @@ Digital Photo Frame for Raspberry Pi
     Note that if you change the start/stop timing, you will also need to modify the photo_frame_boot_start.sh script
 
 ### Files:
-- `crontab` - example crontab implementation  
+- `crontab.sample` - example crontab implementation  
 - `photo_frame.conf` - config file 
 - `photo_frame_start.sh`  - script to turn on display, select images and start displaying them. (usually executed by a cron job)
 - `photo_frame_stop.sh` - script to stop displaying images and turn off display (usually executed by a cron job) 
