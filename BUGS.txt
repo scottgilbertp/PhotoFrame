@@ -2,12 +2,6 @@ This code has a few built-in assumptions and limitations.
 
 Here I will try to document these various "flaws":
 
-"Good" photos are assumed to have a "a" suffix, which used to be a convention
-we used whenever we editted a photo. Over time, this is a less and less
-useful way to identify "good" photos.
-
-"Good" photo selection is still hardcoded for jpeg files ("*.j*g")
-
 For "anniversary" photo selection, photos are assumed to have the date they 
 were taken somewhere in their path.  (either in a directory named with the 
 date, or the filename itself) Further, this date is assumed to be in either 

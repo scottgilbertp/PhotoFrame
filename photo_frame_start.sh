@@ -47,16 +47,6 @@ done < $EXCLUDESFILE
 cd $PHOTODIR
 IMAGES=''
 
-#  Include NUM_PICS_GOOD "good" pictures (ie: have an 'a' appended to filename 
-#  suggesting they have been edited)
-if [[ $NUM_PICS_GOOD -gt 0 ]]; then
-  FINDCMD="find ./ $EXCLUDES $GOOD_PICS_ADDL_PARMS -iname '*a.j*g' -print"
-  IMAGES="$(eval $FINDCMD | shuf -n $NUM_PICS_GOOD)"
-fi
-
-[[ $DEBUG -eq 1 ]] && echo "Number of photos selected after adding up to " \
-                           "$NUM_PICS_GOOD good: $(echo "$IMAGES"|wc -l)"
-
 # Include (up to) NUM_PICS_RECENT "recent" pictures 
 # ("recent" means within the last NUM_PICS_RECENT_DAYS days)
 if [[ $NUM_PICS_RECENT -gt 0 ]]; then
