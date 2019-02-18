@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This only runs at boot time and decides whether the photo frame should be
 # started or not. If the time of the day is 6:00am or later AND before 10:00pm,
 # then start, else just exit.

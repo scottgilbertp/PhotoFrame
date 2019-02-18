@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "$(date +%F-%T) - Starting photo_frame"
 
