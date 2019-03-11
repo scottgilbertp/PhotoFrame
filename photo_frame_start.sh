@@ -126,6 +126,8 @@ if [[ ! -z $PHOTO_LIST_HTML ]] ; then
     >> "$PHOTO_LIST_HTML"
 fi
 
+[[ $DEBUG -eq 1 ]] && echo "$(date +%F-%T) - Photo selection complete. Starting display."
+
 # For some reason, the framebuffer doesn't seem to always activate.
 # switching to virt console 2 seems to fix it. Someday I want to understand this. 
 chvt 2 
