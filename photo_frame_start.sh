@@ -104,8 +104,8 @@ fi
 [[ $DEBUG -eq 1 ]] && echo "Number of pics before removal of dups: " \
                            "$(echo "$IMAGES" | wc -l)"
 
-# Remove duplicate listings and randomize image list
-IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
+# Remove duplicate listings, remove leading './',  and randomize image list
+IMAGES=$(echo "$IMAGES" | sort | uniq | sed 's/^\.\///' | shuf -n $TOTALPICS)
 
 [[ $DEBUG -eq 1 ]] && echo "Final number of pics:  $(echo "$IMAGES" | wc -l)" 
 [[ $EXIT_AFTER_SELECT -eq 1 ]] && echo "$IMAGES" > /tmp/photo_frame_debug_file_list.txt
@@ -121,7 +121,7 @@ IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
 if [[ ! -z $PHOTO_LIST_HTML ]] ; then
   echo "<h2> $(date +'%A %F') </h2> <br>" > "$PHOTO_LIST_HTML"
   echo "$IMAGES" \
-    | sed "s/^\.\/\(.*\)$/<a href=\"${PHOTO_LIST_HTML_PREFIX//\//\\\/}\1\">\1<\/a><br>/" \
+    | sed "s/^\(.*\)$/<a href=\"${PHOTO_LIST_HTML_PREFIX//\//\\\/}\1\">\1<\/a><br>/" \
     | nl \
     | gawk "{print strftime(\"%H:%M - \",systime() + (\$1 * $TOTAL_TIME_PER_PHOTO) ),\$0 ; }" \
     >> "$PHOTO_LIST_HTML"
