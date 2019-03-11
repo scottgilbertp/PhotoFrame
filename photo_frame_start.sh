@@ -120,7 +120,8 @@ IMAGES=$(echo "$IMAGES" | sort | uniq | shuf -n $TOTALPICS)
 #       scaling time, and blend time.
 if [[ ! -z $PHOTO_LIST_HTML ]] ; then
   echo "<h2> $(date +'%A %F') </h2> <br>" > "$PHOTO_LIST_HTML"
-  echo "$IMAGES" | sed 's/^\.\/\(.*\)$/<a href="Photos\/\1">\1<\/a><br>/' \
+  echo "$IMAGES" \
+    | sed "s/^\.\/\(.*\)$/<a href=\"${PHOTO_LIST_HTML_PREFIX//\//\\\/}\1\">\1<\/a><br>/" \
     | nl \
     | gawk "{print strftime(\"%H:%M - \",systime() + (\$1 * $TOTAL_TIME_PER_PHOTO) ),\$0 ; }" \
     >> "$PHOTO_LIST_HTML"

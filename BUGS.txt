@@ -17,10 +17,6 @@ anniversay pictures are determed based on directory/file name, ignoring mtime.
 Anniversary pictures are hardcoded for "today's date plus or minus one day". It
 would be nice to have this range be configurable.
 
-When generating the html page, the hard-coded path "Photos/" is prepended to 
-each file name in the html aref link.  This really should be configurable
-and specified in the config file.
-
 The day's list of photos to be displayed is passed to the image display 
 program ("fbi") on the command line.  This command could become long 
 enough to cause problems. (Note: on my pi, "getconf ARG_MAX" returns
