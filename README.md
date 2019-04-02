@@ -29,9 +29,9 @@ Digital Photo Frame for Raspberry Pi
 ### Notes:
 `photo_frame_start.sh` will accept a single parameter of a config file.  If no config file is specified, then the default (`photo_frame.conf`) is used.  Multiple config files could be created to provide different photo selections on different days.
 
-The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of photos. In the default config, this file contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, suitable for display by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
+The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of photos. In the default config, the filename contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, suitable for display by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
 
-I run this as the root user.  IF you prefer to run it as an unpriviged user, that user will need write access to the framebuffer device (`/dev/fb0`), as well as any directory where "todays list" files are written, and of course read-access to the photos to be displayed.
+I run this as the root user.  IF you prefer to run it as an unpriviged user, that user will need write access to the framebuffer device (`/dev/fb0`), as well as any directory where the "todays list" files are to be written, and of course, read-access to the photos to be displayed.
 
 The script uses the `tvservice` command to turn the monitor on/off.  This works for me, but I've heard that it may not work properly with all monitors. I'm open to suggestions for a more universal way of handling this.
 

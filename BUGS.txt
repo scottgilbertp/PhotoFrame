@@ -8,11 +8,14 @@ useful way to identify "good" photos.
 
 "Good" photo selection is still hardcoded for jpeg files ("*.j*g")
 
-Photos are assumed to have the date they were taken somewhere in their path.
-(typically either in a directory named with the date, or the filename itself)
+For "anniversary" photo selection, photos are assumed to have the date they 
+were taken somewhere in their path.  (either in a directory named with the 
+date, or the filename itself) Further, this date is assumed to be in either 
+`-MM-DD` or `MMDD_` format.
 
-Inconsistency:  "recent" pictures are determined based on file mtime.  But, 
-anniversay pictures are determed based on directory/file name, ignoring mtime.
+Inconsistency:  "recent" pictures are identified based on file mtime.  But, 
+anniversary pictures are identified based on directory/file name, ignoring 
+mtime.
 
 Anniversary pictures are hardcoded for "today's date plus or minus one day". It
 would be nice to have this range be configurable.
