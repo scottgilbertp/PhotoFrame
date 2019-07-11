@@ -68,16 +68,35 @@ fi
 [[ $DEBUG -eq 1 ]] && echo "Number of photos selected after adding up to " \
                            "$NUM_PICS_RECENT recent: $(echo "$IMAGES"|wc -l)"
 
-# Include (up to) NUM_PICS_ANNIV pictures from "same day of the year (+/- 1 day)"
+# Include (up to) NUM_PICS_ANNIV pictures from "same day of the year"
+# and "almost the same day", as defined by ANNIV_DAYS_BEFORE and
+# ANNIV_DAYS_AFTER.
 # (match either dates with '-' separaters OR no separators and trailing underscore)
 if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
-  DATES="\( -path '*-$(date +%m-%d)*' \
-        -or -path '*-$(date --date=yesterday +%m-%d)*' \
-        -or -path '*-$(date --date=tomorrow +%m-%d)*' \
-        -or -path '*$(date +%m%d)_*' \
-        -or -path '*$(date --date=yesterday +%m%d)_*' \
-        -or -path '*$(date --date=tomorrow +%m%d)_*' \)"
 
+  # always include today
+  DATES="\( -path '*-$(date +%m-%d)*'  -or -path '*-$(date +%m%d)_*' "
+
+  # include ANNIV_DAYS_BEFORE days before current date
+  while [ "$ANNIV_DAYS_BEFORE"  -gt "0" ] ; do
+    ADD_DATE="$(date --date="$ANNIV_DAYS_BEFORE days ago" +%m-%d)"
+    DATES="$DATES -or -path '*-${ADD_DATE}*'"
+    ADD_DATE="$(date --date="$ANNIV_DAYS_BEFORE days ago" +%m%d)"
+    DATES="$DATES -or -path '*-${ADD_DATE}_*'"
+    ANNIV_DAYS_BEFORE="$(( $ANNIV_DAYS_BEFORE - 1 ))"
+  done
+
+  # include ANNIV_DAYS_AFTER days after current date
+  while [ "$ANNIV_DAYS_AFTER"  -gt "0" ] ; do
+    ADD_DATE="$(date --date="$ANNIV_DAYS_AFTER days" +%m-%d)"
+    DATES="$DATES -or -path '*-${ADD_DATE}*'"
+    ADD_DATE="$(date --date="$ANNIV_DAYS_AFTER days" +%m%d)"
+    DATES="$DATES -or -path '*-${ADD_DATE}_*'"
+    ANNIV_DAYS_AFTER="$(( $ANNIV_DAYS_AFTER - 1 ))"
+  done
+
+  DATES="$DATES \)"
+  [[ $DEBUG -eq 1 ]] && echo "DATES=$DATES"
   FINDCMD="find ./ $EXCLUDES $ANNIV_PICS_ADDL_PARMS $PHOTO_EXTS ${DATES} -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_ANNIV)"
 fi
