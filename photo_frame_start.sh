@@ -74,6 +74,13 @@ fi
 # (match either dates with '-' separaters OR no separators and trailing underscore)
 if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
 
+  # if either ANNIV_DAYS_BEFORE or ANNIV_DAYS_AFTER are unset, or not a valid integer
+  # then default them to '0'
+  ANNIV_DAYS_BEFORE="${ANNIV_DAYS_BEFORE:-0}"
+  ANNIV_DAYS_AFTER="${ANNIV_DAYS_AFTER:-0}"
+  [[ "$ANNIV_DAYS_BEFORE" =~ ^[0-9]+$ ]] || ANNIV_DAYS_BEFORE='0'  
+  [[ "$ANNIV_DAYS_AFTER" =~ ^[0-9]+$ ]] || ANNIV_DAYS_AFTER='0'  
+
   # always include today
   DATES="\( -path '*-$(date +%m-%d)*'  -or -path '*-$(date +%m%d)_*' "
 
