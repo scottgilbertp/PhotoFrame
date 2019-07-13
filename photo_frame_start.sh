@@ -103,7 +103,7 @@ if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
   done
 
   DATES="$DATES \)"
-  [[ $DEBUG -eq 1 ]] && echo "DATES=$DATES"
+  # [[ $DEBUG -eq 1 ]] && echo "DATES=$DATES"
   FINDCMD="find ./ $EXCLUDES $ANNIV_PICS_ADDL_PARMS $PHOTO_EXTS ${DATES} -print"
   IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_ANNIV)"
 fi
