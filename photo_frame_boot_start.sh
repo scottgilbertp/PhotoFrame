@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# This only runs at boot time and decides whether the photo frame should be
-# started or not. If the time of the day is 6:00am or later AND before 10:00pm,
-# then start, else just exit.
+# This only runs at boot time and decides whether the photo frame display should 
+# be started or not. If the time of the day is 6:00am or later AND before 
+# 10:00pm, then start, else run the stop script (primarly just to turn off the 
+# monitor).
 
 # Note that the times here should correspond with the times that cron is 
 # starting and stopping the photo frame. 
