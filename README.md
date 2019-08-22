@@ -14,9 +14,9 @@ Digital Photo Frame for Raspberry Pi
  1. Clone this repo: `git clone https://github.com/scottgilbert/PhotoFrame.git`
  1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, or whatever)
  1. Edit the photo_frame.conf file to meet your needs.  In particular, you will probably need to adjust `PHOTODIR`
- 1. You should now be able to execute photo_frame_start.sh to test.
+ 1. You should now be able to execute photo_frame_start.sh to test. Photos will not display immediately, as photo selection must complete before displaying any photos.  For me, this takes about a minute, but depending on the number of photos in the collection and the speed of the storage, this could take much longer.
  1. Once verified, create cronjobs to start/stop the photo_frame. (example provided in `crontab.sample` file)
-    Note that if you change the start/stop timing, you will also need to modify the photo_frame_boot_start.sh script
+    Note that if you change the start/stop timing, you will also need to modify the photo_frame_boot_start.sh script.
 
 ### Files:
 - `crontab.sample` - example crontab implementation  
