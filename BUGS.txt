@@ -12,11 +12,16 @@ anniversary pictures are identified based on directory/file name, ignoring
 mtime.
 
 The day's list of photos to be displayed is passed to the image display 
-program ("fbi") on the command line.  This command could become long 
+program (fbi/fim) on the command line.  This command could become long 
 enough to cause problems. (Note: on my pi, "getconf ARG_MAX" returns
 2097152.  The size of a typical day's photo list of 1700 photos is 75-90kB, so
 I think the command length would have to be more than 20x longer before it hit
 the limit.)
+
+Originally, fbi was used to display images.  It seemed to crash occassionally,
+I think when PNG images were included.  I've started to include an option to 
+use fim instead of fbi.  Time will tell whether this turns out to be better
+overall.
 
 Similarly, photo selection is done by generating "find" commands.  In some 
 cases, such as a large number of entries in the "excludes" file, this command 

@@ -4,13 +4,13 @@ PhotoFrame
 Digital Photo Frame for Raspberry Pi
 
 ### Requirements:
-- fbi - framebuffer image viewer  
+- fbi or fim - framebuffer image viewers (fbi seems to have trouble with .png files) 
 - gawk - gnu awk processor (plain awk does not work)
 - nginx - webserver for display of today's list of images (optional)
 
 ### Installation
  1. Install default Raspbian (although other OS's should work with minimal adjustments)
- 1. Install git and dependencies:  `apt install git fbi gawk nginx`
+ 1. Install git and dependencies:  `apt install git fbi gawk nginx` or `apt install git fim gawk nginx`
  1. Clone this repo: `git clone https://github.com/scottgilbert/PhotoFrame.git`
  1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, or whatever)
  1. Edit the photo_frame.conf file to meet your needs.  In particular, you will probably need to adjust `PHOTODIR`

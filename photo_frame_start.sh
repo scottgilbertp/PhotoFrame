@@ -154,15 +154,22 @@ chvt 2
 # previously, I had been setting the depth.  I don't think this is needed anymore.
 #/bin/fbset -depth 16
 
-# fbi parms:
+# fbi/fim parms:
 #  -T 1   = display on first console
 #  -a     = autoscale images to display size
-#  -t     = display time each image 
+#  -t     = display time each image (fbi)
+#  --slideshow     = display time each image (fim)
 #  -u     = randomize order of images
-#  -noverbose = do not display status info at bottom of screen
-#  -f 'font' = specify font to use for status info
+#  -noverbose = do not display status info at bottom of screen (fbi)
+#  -v     = display status info at bottom of screen (fim)
+#  -f 'font' = specify font to use for status info (fbi)
 #  -readahead = read ahead images into cache (pre-fetches next image 
-#               immediately after showing current image)
-#  -blend = image blend time in milliseconds
+#               immediately after showing current image) (fbi)
+#  -blend = image blend time in milliseconds (fbi)
 
-fbi -T 1 -a -t $PHOTO_DISPLAY_TIME -f $TITLE_FONT -readahead -blend $BLEND_TIME $IMAGES
+IF [[ $IMAGE_VIEWER == "fim" ]] ; then
+  FBFONT="$TITLE_FONT"
+  fim -T 1 -a --slideshow $PHOTO_DISPLAY_TIME -v $IMAGES
+else
+  fbi -T 1 -a -t $PHOTO_DISPLAY_TIME -f $TITLE_FONT -readahead -blend $BLEND_TIME $IMAGES
+fi

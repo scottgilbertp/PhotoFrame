@@ -6,3 +6,4 @@ echo "$(date +%F-%T) - Stopping photo_frame"
 tvservice -o
 
 killall fbi
+killall fim
