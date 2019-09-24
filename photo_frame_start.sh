@@ -52,7 +52,7 @@ IMAGES=''
 if [[ $NUM_PICS_RECENT -gt 0 ]]; then
   FINDCMD="find ./ $EXCLUDES $RECENT_PICS_ADDL_PARMS $PHOTO_EXTS \
     -mtime -${NUM_PICS_RECENT_DAYS} -print"
-  IMAGES="${IMAGES}${NEWL}$(eval $FINDCMD | shuf -n $NUM_PICS_RECENT)"
+  IMAGES="$(eval $FINDCMD | shuf -n $NUM_PICS_RECENT)"
 fi
 
 [[ $DEBUG -eq 1 ]] && echo "Number of photos selected after adding up to " \
