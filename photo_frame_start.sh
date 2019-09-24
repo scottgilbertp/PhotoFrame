@@ -51,7 +51,7 @@ IMAGES=''
 # ("recent" means within the last NUM_PICS_RECENT_DAYS days)
 if [[ $NUM_PICS_RECENT -gt 0 ]]; then
   FINDCMD="find ./ $EXCLUDES $RECENT_PICS_ADDL_PARMS $PHOTO_EXTS \
-    -mtime -${NUM_PICS_RECENT_DAYS} -print"
+    -daystart -mtime -${NUM_PICS_RECENT_DAYS} -print"
   IMAGES="$(eval $FINDCMD | shuf -n $NUM_PICS_RECENT)"
 fi
 
