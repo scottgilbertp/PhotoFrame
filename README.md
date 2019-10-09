@@ -35,4 +35,4 @@ I run this as the root user.  IF you prefer to run it as an unpriviged user, tha
 
 The script uses the `tvservice` command to turn the monitor on/off.  This works for me, but I've heard that it may not work properly with all monitors. I'm open to suggestions for a more universal way of handling this.
 
-There are still a few things that are "hard coded". See the BUGS.txt file for other defects and limitations.
+There are a few things that are not ideal. See the BUGS.txt file for known defects and limitations.
