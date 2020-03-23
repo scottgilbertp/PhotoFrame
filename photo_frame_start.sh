@@ -72,14 +72,14 @@ if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
   [[ "$ANNIV_DAYS_AFTER" =~ ^[0-9]+$ ]] || ANNIV_DAYS_AFTER='0'  
 
   # always include today
-  DATES="\( -path '*-$(date +%m-%d)*'  -or -path '*-$(date +%m%d)_*' "
+  DATES="\( -path '*-$(date +%m-%d)*'  -or -path '*$(date +%m%d)_*' "
 
   # include ANNIV_DAYS_BEFORE days before current date
   while [ "$ANNIV_DAYS_BEFORE"  -gt "0" ] ; do
     ADD_DATE="$(date --date="$ANNIV_DAYS_BEFORE days ago" +%m-%d)"
     DATES="$DATES -or -path '*-${ADD_DATE}*'"
     ADD_DATE="$(date --date="$ANNIV_DAYS_BEFORE days ago" +%m%d)"
-    DATES="$DATES -or -path '*-${ADD_DATE}_*'"
+    DATES="$DATES -or -path '*${ADD_DATE}_*'"
     ANNIV_DAYS_BEFORE="$(( $ANNIV_DAYS_BEFORE - 1 ))"
   done
 
@@ -88,7 +88,7 @@ if [[ $NUM_PICS_ANNIV -gt 0 ]]; then
     ADD_DATE="$(date --date="$ANNIV_DAYS_AFTER days" +%m-%d)"
     DATES="$DATES -or -path '*-${ADD_DATE}*'"
     ADD_DATE="$(date --date="$ANNIV_DAYS_AFTER days" +%m%d)"
-    DATES="$DATES -or -path '*-${ADD_DATE}_*'"
+    DATES="$DATES -or -path '*${ADD_DATE}_*'"
     ANNIV_DAYS_AFTER="$(( $ANNIV_DAYS_AFTER - 1 ))"
   done
 
