@@ -1,7 +1,7 @@
-# exclude pictures of kristi's toe surgery
+# kristi's toe surgery
 *2002-10-*
 
-# exclude Rebecca's post-heart-surgery pics
+# Rebecca's post-heart-surgery pics
 *2007-06-30*
 *2007-07-08*
 
@@ -15,14 +15,17 @@
 *Jaques_Family_Photos_CD*0396*
 *Jaques_Family_Photos_CD*0400*
 
-# exclude pictures of Scotts swollen eye
+# Scotts swollen eye
 *2011-07-30*
 
-# exclude tombstones
+# tombstones
 *2018-04-15?10.2*
 
-# exclude jakes nose picking goals
+# jakes nose picking goals
 *2018-04-19?17.11.18*
 
 # jakes prayer
 *2020-03-04?17.36*
+
+# Kristis covid-19 vaccination
+*2021-01-13*
