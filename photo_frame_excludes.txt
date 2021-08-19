@@ -32,3 +32,6 @@
 
 # Mamogram
 *2021-03-11*
+
+# Kristis covid-19 vaccination booster
+*2021-08-18*
