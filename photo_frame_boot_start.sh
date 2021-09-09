@@ -2,13 +2,14 @@
 # This only runs at boot time and decides whether the photo frame display should 
 # be started or not. 
 
-# If the time of the day is 6:00am or later AND before 9:45pm, then start, else 
-# run the stop script (primarly just to turn off the monitor). We are only 
-# starting if we are at least 15 minutes before the "stop" time - this 
-# eliminates the "race condition" of starting photo selection just before "stop 
-# time" and having the "stop" script run while photo selection is # still in 
-# progress.  Besides, why go to all the effort to select a whole lot # of 
-# photos, if we would only be able to display a handful before stopping?
+# If the time of the day is START_TIME or later AND before STOP_TIME by at 
+# least MIN_RUN_MINS minutes,  then start, else run the stop script (primarly 
+# just to turn off the monitor).  We only start if the current time is at least 
+# MIN_RUN_MINS minutes before STOP_TIME - this eliminates the "race condition" 
+# of starting photo selection just before "stop time" and having the "stop" 
+# script run while photo selection is # still in progress.  Besides, why go to 
+# all the effort to select a bunch of photos, if we would only have time to 
+# display a handful before stopping?
 
 # Note that the times here should correspond with the times that cron is 
 # starting and stopping (minus about 15 minutes) the photo frame. 
@@ -17,6 +18,11 @@
 # octal. So, for example, a time of "0900" (which is not a valid octal number)
 # causes problems.  To prevent this, the time is forced to be interpreted as 
 # decimal in the comparisons by prefixing the variable with '10#'.
+
+START_TIME='0600'
+STOP_TIME='2200'
+# only start if we are at least this many minutes before STOP_TIME:
+MIN_RUN_MINS='15'
 
 TIME=$(date +%H%M)
 
@@ -28,7 +34,10 @@ MYDIR="$(readlink -f ${0%/*})"
 
 echo -n "$(date +%F-%T) - We rebooted! Time is $TIME, so "
 
-if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2145 ]]; then
+# compute the time MIN_RUN_MINS before STOP_TIME
+START_BEFORE_TIME="$(date +%H%M --date "$STOP_TIME - $MIN_RUN_MINS minutes")"
+
+if [[ 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$START_BEFORE_TIME ]]; then
   echo "photo frame is starting..."
   $MYDIR/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
