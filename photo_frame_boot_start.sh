@@ -11,8 +11,9 @@
 # all the effort to select a bunch of photos, if we would only have time to 
 # display a handful before stopping?
 
-# Note that the times here should correspond with the times that cron is 
-# starting and stopping (minus about 15 minutes) the photo frame. 
+# Note that START_TIME here should correspond with the times that cron is 
+# starting and STOP_TIME should correstond with the times that cron is 
+# stopping the photo frame. 
 
 # Note: If time starts with a leading zero, bash wants to interpret it as
 # octal. So, for example, a time of "0900" (which is not a valid octal number)
@@ -21,7 +22,7 @@
 
 START_TIME='0600'
 STOP_TIME='2200'
-# only start if we are at least this many minutes before STOP_TIME:
+# only start if the current time is at least this many minutes before STOP_TIME:
 MIN_RUN_MINS='15'
 
 TIME=$(date +%H%M)
