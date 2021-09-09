@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 # This only runs at boot time and decides whether the photo frame display should 
-# be started or not. If the time of the day is 6:00am or later AND before 
-# 10:00pm, then start, else run the stop script (primarly just to turn off the 
-# monitor).
+# be started or not. 
+
+# If the time of the day is 6:00am or later AND before 9:45pm, then start, else 
+# run the stop script (primarly just to turn off the monitor). We are only 
+# starting if we are at least 15 minutes before the "stop" time - this 
+# eliminates the "race condition" of starting photo selection just before "stop 
+# time" and having the "stop" script run while photo selection is # still in 
+# progress.  Besides, why go to all the effort to select a whole lot # of 
+# photos, if we would only be able to display a handful before stopping?
 
 # Note that the times here should correspond with the times that cron is 
-# starting and stopping the photo frame. 
+# starting and stopping (minus about 15 minutes) the photo frame. 
 
 # Note: If time starts with a leading zero, bash wants to interpret it as
 # octal. So, for example, a time of "0900" (which is not a valid octal number)
@@ -22,7 +28,7 @@ MYDIR="$(readlink -f ${0%/*})"
 
 echo -n "$(date +%F-%T) - We rebooted! Time is $TIME, so "
 
-if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2200 ]]; then
+if [[ 10#$TIME -ge 600 && 10#$TIME -lt 2145 ]]; then
   echo "photo frame is starting..."
   $MYDIR/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else
