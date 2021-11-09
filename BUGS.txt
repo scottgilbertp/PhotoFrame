@@ -33,4 +33,6 @@ Sometimes after a reboot, photo_frame starts and runs normally, but no images
 are displayed.  Running the stop script followed by the start script resolves
 the problem.  I don't know what is causing this. I've added a "chvt 2", which
 *seems* to solve this issue, but I still don't really understand the issue
-or why this would solve it.
+or why this would solve it. (2021-11-09: It has been a long time since I've 
+seen this problem occur.  Maybe its the current monitor I'm using?  Maybe the
+"chvt 2" has fixed it?  Maybe something else?)
