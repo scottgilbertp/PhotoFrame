@@ -33,6 +33,6 @@ The `photo_frame_start.sh script` selects a list of photos and displays them.  I
 
 I run this as the root user.  IF you prefer to run it as an unpriviged user, that user will need write access to the framebuffer device (`/dev/fb0`), as well as any directory where the "todays list" files are to be written, and of course, read-access to the photos to be displayed.
 
-The script uses the `tvservice` command to turn the monitor on/off.  This works for me, but I've heard that it may not work properly with all monitors. I'm open to suggestions for a more universal way of handling this.
+The script uses the `vcgencmd` command to turn the monitor on/off.  Prior to bookworm, it used `tvservice`. This works for me, at least for now, but I've heard that it may not work properly with all monitors. I'm open to suggestions for a more universal way of handling this.
 
 There are a few things that are not ideal. See the BUGS.txt file for known defects and limitations.

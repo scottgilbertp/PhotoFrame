@@ -150,7 +150,9 @@ fi
 chvt 2 
 
 # turn on display
-/usr/bin/tvservice -p
+/usr/bin/vcgencmd display_power 1
+# pre-bookworm, we used this:
+#/usr/bin/tvservice -p
 # previously, I had been setting the depth.  I don't think this is needed anymore.
 #/bin/fbset -depth 16
 
