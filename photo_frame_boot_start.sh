@@ -33,12 +33,22 @@ TIME=$(date +%H%M)
 #  absolute path)
 MYDIR="$(readlink -f ${0%/*})"
 
-echo -n "$(date +%F-%T) - We rebooted! Time is $TIME, so "
-
 # compute the time MIN_RUN_MINS before STOP_TIME
-START_BEFORE_TIME="$(date +%H%M --date "$STOP_TIME - $MIN_RUN_MINS minutes")"
+STOP_TIME_ADJ="$(date +%H%M --date "$STOP_TIME - $MIN_RUN_MINS minutes")"
 
-if [[ 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$START_BEFORE_TIME ]]; then
+echo "$(date +%F-%T) - We rebooted! Time is $TIME, Start time is $START_TIME, Adjusted Stop Time is $STOP_TIME_ADJ, so..."
+
+# IF start_time is less than stop_time, then we are starting and stopping within the same day.
+# IF start_time is greater than stop_time, then we are starting, running through midnight, and
+#    stopping the next day.
+# The following logic accounts for these two possibilities.
+
+if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ && 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$STOP_TIME_ADJ ]]; then
+  # typical start and then stop within the same day
+  echo "photo frame is starting..."
+  $MYDIR/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
+elif [[ 10#$START_TIME -gt 10#$STOP_TIME_ADJ && 10#$TIME -ge 10#$STOP_TIME_ADJ && 10#$TIME -lt 10#$START_TIME ]]; then
+  # start during one one day, run through midnight and stop the next day
   echo "photo frame is starting..."
   $MYDIR/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log
 else

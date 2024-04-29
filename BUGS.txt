@@ -29,13 +29,10 @@ AND in the photo_frame_boot_start.sh script.  It would be nice to have a way to
 define this timing in just one place to eliminate the opportunity for
 inconsistencies.
 
-The logic in photo_frame_boot_start.sh assumes that the photo_frame will start
-and stop within one day, and not run through midnight. This logic breaks if,
-for example one wanted the display to run from 11pm until 2am.  Similarly,
-there is no provision for the display to, for example, run continuously for a
-multi-day period of time.  Cron jobs could definitely be created to implement
-these scenarios - only the photo_frame_boot_start.sh script does not handle
-them.
+The photo_frame_boot_start.sh script has no provision for the display to run
+continuously for a multi-day period of time.  Cron jobs could definitely be
+created to implement a multi-day schedule - BUT the photo_frame_boot_start.sh
+script can not handle it.
 
 Sometimes after a reboot, photo_frame starts and runs normally, but no images
 are displayed.  Running the stop script followed by the start script resolves
