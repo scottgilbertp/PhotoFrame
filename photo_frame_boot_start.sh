@@ -36,7 +36,7 @@ MYDIR="$(readlink -f ${0%/*})"
 # compute the time MIN_RUN_MINS before STOP_TIME
 STOP_TIME_ADJ="$(date +%H%M --date "$STOP_TIME - $MIN_RUN_MINS minutes")"
 
-echo "$(date +%F-%T) - We rebooted! Time is $TIME, Start time is $START_TIME, Adjusted Stop Time is $STOP_TIME_ADJ, so..."
+echo "$(date +%F-%T) - We rebooted! Start time is $START_TIME, Adjusted Stop Time is $STOP_TIME_ADJ, Current Time is $TIME, so..."
 
 # IF start_time is less than stop_time, then we are starting and stopping within the same day.
 # IF start_time is greater than stop_time, then we are starting, running through midnight, and
