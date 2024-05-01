@@ -1,0 +1,14 @@
+[Unit]
+Description=Photo Frame Display
+After=time-sync.target
+Wants=time-sync.target
+
+[Service]
+Type=exec
+EnvironmentFile=/root/PhotoFrame/photo_frame.conf
+ExecStart=/root/PhotoFrame/photo_frame_service.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

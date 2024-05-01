@@ -2,28 +2,6 @@
 
 echo "$(date +%F-%T) - Starting photo_frame"
 
-# MYDIR is the directory of this script.
-# we assume that other files are in this same dir.
-# (readlink is used to expand a possible relative path to an
-#  absolute path)
-MYDIR="$(readlink -f ${0%/*})"
-
-# If a config file is specified, use it, otherwise default
-if [[ ! -z $1 ]]; then
-  CONF_FILE="$1"
-else
-  CONF_FILE="${MYDIR}/photo_frame.conf"
-fi
-
-if [[ -r $CONF_FILE ]]; then
-  . $CONF_FILE
-else
-  echo "ERROR: Cannot find config file: $CONF_FILE"  
-  exit 77
-fi
-
-[[ $DEBUG -eq 1 ]] && echo "Using settings from config file: $CONF_FILE"
-
 # Set "field separater" to end of line to allow spaces and other special chars
 # in filepaths
 IFS=$'\n\b'
@@ -151,20 +129,15 @@ chvt 2
 
 # turn on display
 /usr/bin/vcgencmd display_power 1
-# pre-bookworm, we used this:
-#/usr/bin/tvservice -p
-# previously, I had been setting the depth.  I don't think this is needed anymore.
-#/bin/fbset -depth 16
 
 # fbi parms:
 #  -T 1   = display on first console
 #  -a     = autoscale images to display size
 #  -t     = display time each image 
-#  -u     = randomize order of images
 #  -noverbose = do not display status info at bottom of screen
 #  -f 'font' = specify font to use for status info
 #  -readahead = read ahead images into cache (pre-fetches next image 
 #               immediately after showing current image)
-#  -blend = image blend time in milliseconds
+#  -blend = image blend ("cross fade") time in milliseconds
 
 fbi -T 1 -a -t $PHOTO_DISPLAY_TIME -f $TITLE_FONT -readahead -blend $BLEND_TIME $IMAGES

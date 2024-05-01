@@ -1,9 +1,0 @@
-# m h  dom mon dow   command
-
-# start photo_frame at 6:00am, and stop it at 10:00pm, every day
-00 06 * * * /root/PhotoFrame/photo_frame_start.sh 2>&1 >> /var/log/photo_frame.log 
-00 22 * * * /root/PhotoFrame/photo_frame_stop.sh 2>&1 >> /var/log/photo_frame.log 
-
-# At boot time, wait a bit to let time be set properly, then decide whether to start photoframe
-@reboot    sleep 60; /root/PhotoFrame/photo_frame_boot_start.sh 2>&1 >> /var/log/photo_frame.log
-

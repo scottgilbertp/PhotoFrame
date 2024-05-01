@@ -24,20 +24,10 @@ could become quite long - perhaps long enough to cause problems. This should
 only be an issue if one had a very large number of  "excludes" or perhaps a 
 very large range of "anniversary" days.
 
-The timing of when photo display starts and stops is defined by both a cron job
-AND in the photo_frame_boot_start.sh script.  It would be nice to have a way to
-define this timing in just one place to eliminate the opportunity for
-inconsistencies.
+There is no provision for the display to run continuously for a multi-day
+period of time. It is assumed that the display will run for no more than 24
+hours.  
 
-The photo_frame_boot_start.sh script has no provision for the display to run
-continuously for a multi-day period of time.  Cron jobs could definitely be
-created to implement a multi-day schedule - BUT the photo_frame_boot_start.sh
-script can not handle it.
-
-Sometimes after a reboot, photo_frame starts and runs normally, but no images
-are displayed.  Running the stop script followed by the start script resolves
-the problem.  I don't know what is causing this. I've added a "chvt 2", which
-*seems* to solve this issue, but I still don't really understand the issue
-or why this would solve it. (2021-11-09: It has been a long time since I've 
-seen this problem occur.  Maybe its the current monitor I'm using?  Maybe the
-"chvt 2" has fixed it?  Maybe something else?)
+Only able to access photos via filesystem.  It would be awesome to be able to
+access "cloud" photo repositories from Google, Amazon, etc. This would
+complicate photo selection.

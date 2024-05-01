@@ -13,21 +13,21 @@ Digital Photo Frame for Raspberry Pi
  1. Install git and dependencies:  `apt install git fbi gawk nginx`
  1. Clone this repo: `git clone https://github.com/scottgilbert/PhotoFrame.git`
  1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, or whatever)
- 1. Edit the photo_frame.conf file to meet your needs.  In particular, you will probably need to adjust `PHOTODIR`
- 1. You should now be able to execute photo_frame_start.sh to test. Photos will not display immediately, as photo selection must complete before displaying any photos.  For me, this takes about a minute, but depending on the number of photos in the collection and the speed of the storage, this could take much longer.
- 1. Once verified, create cronjobs to start/stop the photo_frame. (example provided in `crontab.sample` file)
-    Note that if you change the start/stop timing, you will also need to modify the photo_frame_boot_start.sh script.
+ 1. Edit the photo_frame.conf file to meet your needs.  In particular, you will probably need to adjust `PHOTODIR`, and maybe `START_TIME` and `STOP_TIME`
+ 1. Edit the photo_frame.service file, changing the file paths to match the location on your pi
+ 1. Copy the photo_frame.service file where systemd expects it:  `cp photo_frame.service /etc/systemd/system/`
+ 1. Tell systemd to read the new photo_frame.service file: `systemctl daemon-reload`
+ 1. Start and enable the service: `systemct enable --now photo_frame.service`
 
 ### Files:
-- `crontab.sample` - example crontab implementation  
 - `photo_frame.conf` - config file 
 - `photo_frame_start.sh`  - script to turn on display, select images and start displaying them. (usually executed by a cron job)
 - `photo_frame_stop.sh` - script to stop displaying images and turn off display (usually executed by a cron job) 
-- `photo_frame_boot_start.sh` - script to run at boot time which considers the current time and decides whether or not to run photo_frame_start.sh  (executed by cron "@reboot" job or a system "init" mechanism)
 - `photo_frame_excludes.txt` - list of filepath globs to never show (may include comments preceeded with a "#")  
+- `photo_frame.service` - systemd unit file, defining the photo_frame service
+- `photo_frame_service.sh` - script which runs as the service.  Loops forever, turning display on and off
 
 ### Notes:
-`photo_frame_start.sh` will accept a single parameter of a config file.  If no config file is specified, then the default (`photo_frame.conf`) is used.  Multiple config files could be created to provide different photo selections on different days.
 
 The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of photos. In the default config, the filename contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, suitable for display by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
 
