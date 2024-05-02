@@ -1,7 +1,6 @@
 [Unit]
 Description=Photo Frame Display
-After=time-sync.target
-Wants=time-sync.target
+After=multi-user.target time-sync.target
 
 [Service]
 Type=exec
