@@ -106,7 +106,11 @@ IMAGES=$(echo "$IMAGES" | sort | uniq | sed 's/^\.\///' | shuf -n $TOTALPICS)
 [[ $EXIT_AFTER_SELECT -eq 1 ]] && exit 50
 
 # Log IMAGES list to file:
-[[ ! -z $PHOTO_LIST_TEXT ]] && echo "$IMAGES" > "$PHOTO_LIST_TEXT"
+if [[ ! -z $PHOTO_LIST_TEXT ]] ; then
+  # update filename to replace %d with the current "day of the month"
+  PHOTO_LIST_TEXT="${PHOTO_LIST_TEXT/\%d/$(date +%d)}"
+  echo "$IMAGES" > "$PHOTO_LIST_TEXT"
+fi
 
 # Generate web page list of today's images
 # note: Assumes that images will be displayed for an average of TOTAL_TIME_PER_PHOTO 
