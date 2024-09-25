@@ -21,8 +21,8 @@ Digital Photo Frame for Raspberry Pi
 
 ### Files:
 - `photo_frame.conf` - config file 
-- `photo_frame_start.sh`  - script to turn on display, select images and start displaying them. (usually executed by a cron job)
-- `photo_frame_stop.sh` - script to stop displaying images and turn off display (usually executed by a cron job) 
+- `photo_frame_start.sh`  - script to turn on display, select images and start displaying them. (normally executed by photo_frame_service.sh)
+- `photo_frame_stop.sh` - script to stop displaying images and turn off display (normally executed by photo_frame_service.sh)
 - `photo_frame_excludes.txt` - list of filepath globs to never show (may include comments preceeded with a "#")  
 - `photo_frame.service` - systemd unit file, defining the photo_frame service
 - `photo_frame_service.sh` - script which runs as the service.  Loops forever, turning display on and off
