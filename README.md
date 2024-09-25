@@ -10,6 +10,7 @@ Digital Photo Frame for Raspberry Pi
 
 ### Installation
  1. Install default Raspberry Pi OS (although other linux should work with minimal adjustments)
+ 1. Comment out the line "dtoverlay=vc4-kms-v3d" in /boot/firmware/config.txt and reboot (see notes about turning monitor on/off)
  1. Install git and dependencies:  `apt install git fbi gawk nginx`
  1. Clone this repo: `git clone https://github.com/scottgilbert/PhotoFrame.git`
  1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, or whatever)
@@ -33,6 +34,6 @@ The `photo_frame_start.sh script` selects a list of photos and displays them.  I
 
 I run this as the root user.  IF you prefer to run it as an unpriviged user, that user will need write access to the framebuffer device (`/dev/fb0`), as well as any directory where the "todays list" files are to be written, and of course, read-access to the photos to be displayed.
 
-The script uses the `vcgencmd` command to turn the monitor on/off.  Prior to bookworm, it used `tvservice`. This works for me, at least for now, but I've heard that it may not work properly with all monitors. I'm open to suggestions for a more universal way of handling this.
+The script currently uses the `vcgencmd` command to turn the monitor on/off.  Prior to bookworm, it used `tvservice`. Currently, this requires that the line "dtoverlay=vc4-kms-v3d" in /boot/firmware/config.txt be commented out (followed by a reboot). The ability to turn the monitor on/off seems to be a constantly moving target, depending on the specific monitor, and requiring changes now and then as Pi OS evolves.  I'm open to suggestions for a more universal and stable way of handling this.
 
 There are a few things that are not ideal. See the BUGS.txt file for known defects and limitations.
