@@ -117,7 +117,7 @@ fi
 #       seconds  each. This time includes: intentional display time, load time, 
 #       scaling time, and blend time.
 if [[ ! -z $PHOTO_LIST_HTML ]] ; then
-  echo "<h2> $(date +'%A %F') </h2> <br>" > "$PHOTO_LIST_HTML"
+  echo "<h2> $(hostname) - $(date +'%A %F') </h2> <br>" > "$PHOTO_LIST_HTML"
   echo "$IMAGES" \
     | sed "s/^\(.*\)$/<a href=\"${PHOTO_LIST_HTML_PREFIX//\//\\\/}\1\">\1<\/a><br>/" \
     | nl \
