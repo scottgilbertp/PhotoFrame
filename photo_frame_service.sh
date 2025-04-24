@@ -34,16 +34,28 @@ while /bin/true; do
 
   TIME=$(date +%H%M)
   
-  if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ && 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$STOP_TIME_ADJ ]]; then
+  if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ ]]; then
     # typical start and stop within the same day
-    SLEEP_TIME=0
-  elif [[ 10#$START_TIME -gt 10#$STOP_TIME_ADJ && 10#$TIME -ge 10#$STOP_TIME_ADJ && 10#$TIME -lt 10#$START_TIME ]]; then
-    # start during one one day, run through midnight and stop the next day
-    SLEEP_TIME=0
+    if [[ 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$STOP_TIME_ADJ ]]; then
+      # we are currently inside the display time and should start immediately
+      SLEEP_TIME=0
+    else
+      # we are currently outside the display time and sleep until start time
+      # sleep time is:
+      #  (unix timestamp for start time tomorrow) minus (unix timestamp for current date/time)
+      SLEEP_TIME=$(( $(date +%s --date "tomorrow $START_TIME") - $(date +%s --date "now") ))
+    fi
   else
-    # compute how long to sleep until it is time to start displaying photos
-    # Honestly, I don't fully understand this, but I copied it from somewhere and it seems to work.
-    SLEEP_TIME=$(( ( $(printf 'tomorrow %s\nnow\n' $START_TIME | date -f - +%s-)0 )%86400 ))
+    # start during one one day, run through midnight and stop the next day
+    if  [[ 10#$TIME -ge 10#$STOP_TIME_ADJ && 10#$TIME -lt 10#$START_TIME ]]; then
+      # we are currently inside the display time and should start immediately
+      SLEEP_TIME=0
+    else
+      # we are currently outside the display time and sleep until start time
+      # sleep time is:
+      #  (unix timestamp for start time today) minus (unix timestamp for current date/time)
+      SLEEP_TIME=$(( $(date +%s --date "today $START_TIME") - $(date +%s --date "now") ))
+    fi
   fi
   
   echo "Sleep until start_time: $SLEEP_TIME seconds"
@@ -60,7 +72,18 @@ while /bin/true; do
   # - sleep until stop time
   #
   
-  SLEEP_TIME=$(( ( $(printf 'tomorrow %s\nnow\n' $STOP_TIME | date -f - +%s-)0 )%86400 ))
+  if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ ]]; then
+    # typical start and stop within the same day
+    # sleep time is:
+    #  (unix timestamp for stop time) minus (unix timestamp for current date/time)
+    SLEEP_TIME=$(( $(date +%s --date "today $STOP_TIME") - $(date +%s --date "now") ))
+  else
+    # start during one one day, run through midnight and stop the next day
+    # sleep time is:
+    #  (unix timestamp for stop time tomorrow) minus (unix timestamp for current date/time)
+    SLEEP_TIME=$(( $(date +%s --date "tomorrow $STOP_TIME") - $(date +%s --date "now") ))
+  fi
+
   echo "Sleep until stop_time: $SLEEP_TIME seconds"
   sleep $SLEEP_TIME
 

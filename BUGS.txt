@@ -2,16 +2,6 @@ This code has a few built-in assumptions and limitations.
 
 Here I will try to document these various "flaws":
 
-The logic in photo_frame_service.sh is incomplete.  It does not work properly
-if STOP_TIME < START_TIME (ie: we  start displaying photos before midnight
-and stop displaying the next day). There is some logic to account for this
-use case, but the SLEEP_TIME calculations assume START_TIME < STOP_TIME.
-
-The SLEEP_TIME calculations in photo_frame_service.sh use some "magic code"
-that I don't understand.  It seems to work, but I don't like the idea of 
-relying on code that I don't understand.  I think this could be re-worked
-to be more human-readable.
-
 For "anniversary" photo selection, photos are assumed to have the date they 
 were taken somewhere in their path.  (either in a directory named with the 
 date, or the filename itself) Further, this date is assumed to be in either 
