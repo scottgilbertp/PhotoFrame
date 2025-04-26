@@ -26,7 +26,9 @@ very large range of "anniversary" days.
 
 There is no provision for the display to run continuously for a multi-day
 period of time. It is assumed that the display will run for no more than 24
-hours.  
+hours, with a start and stop each day.  Further, the stop and start times
+are the same every day, with no provision, for example, to have different
+stop/start times on weekday vs weekends.
 
 Only able to access photos via filesystem.  It would be awesome to be able to
 access "cloud" photo repositories from Google, Amazon, etc. This would
