@@ -6,10 +6,13 @@
 #  absolute path)
 MYDIR="$(readlink -f ${0%/*})"
 
-# Sometimes the NTP services have not quite set the system clock yet
-# so we introduce a brief delay here to help ensure we have accurate
-# time before making start/stop decisions
-sleep $TIME_SYNC_DELAY_SECONDS
+# Sometimes, after booting, the NTP services have not quite set the 
+# system clock yet.  So, if uptime is less than 60 seconds when
+# the service starts, we introduce a brief delay here to help ensure 
+# we have accurate time before making start/stop decisions
+if [ $(cat /proc/uptime | grep -o '^[0-9]*') -lt 60 ] ; then
+  sleep $BOOT_DELAY_SECONDS
+fi
 
 # compute the time MIN_RUN_MINS before STOP_TIME
 STOP_TIME_ADJ="$(date +%H%M --date "$STOP_TIME - $MIN_RUN_MINS minutes")"
