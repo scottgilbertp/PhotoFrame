@@ -7,10 +7,11 @@
 MYDIR="$(readlink -f ${0%/*})"
 
 # Sometimes, after booting, the NTP services have not quite set the 
-# system clock yet.  So, if uptime is less than 60 seconds when
+# system clock yet.  So, if uptime is less than REBOOT_UPTIME_SECONDS when
 # the service starts, we introduce a brief delay here to help ensure 
-# we have accurate time before making start/stop decisions
-if [ $(cat /proc/uptime | grep -o '^[0-9]*') -lt 60 ] ; then
+# the NTP service has time to correct the system clock before we 
+# make start/stop decisions based on the current time.
+if [ $(cat /proc/uptime | grep -o '^[0-9]*') -lt $REBOOT_UPTIME_SECONDS ] ; then
   sleep $BOOT_DELAY_SECONDS
 fi
 
