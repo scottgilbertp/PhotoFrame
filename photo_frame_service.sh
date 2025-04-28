@@ -12,6 +12,7 @@ MYDIR="$(readlink -f ${0%/*})"
 # the NTP service has time to correct the system clock before we 
 # make start/stop decisions based on the current time.
 if [ $(cat /proc/uptime | grep -o '^[0-9]*') -lt $REBOOT_UPTIME_SECONDS ] ; then
+  [[ $DEBUG -eq 1 ]] && echo "uptime is less than $REBOOT_UPTIME_SECONDS seconds, so pausing for $BOOT_DELAY_SECONDS seconds" 
   sleep $BOOT_DELAY_SECONDS
 fi
 
@@ -42,7 +43,12 @@ while /bin/true; do
   # The following logic accounts for these two possibilities.
 
   TIME=$(date +%H%M)
-  
+
+  [[ $DEBUG -eq 1 ]] && echo "START_TIME=$START_TIME"
+  [[ $DEBUG -eq 1 ]] && echo "STOP_TIME=$STOP_TIME"
+  [[ $DEBUG -eq 1 ]] && echo "STOP_TIME_ADJ=$STOP_TIME_ADJ"
+  [[ $DEBUG -eq 1 ]] && echo "TIME=$TIME"
+
   if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ ]]; then
     # typical start and stop within the same day
     if [[ 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$STOP_TIME_ADJ ]]; then
@@ -81,7 +87,7 @@ while /bin/true; do
   # - sleep until stop time
   #
   
-  if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ ]]; then
+  if [[ 10#$START_TIME -lt 10#$STOP_TIME ]]; then
     # typical start and stop within the same day
     # sleep time is:
     #  (unix timestamp for stop time) minus (unix timestamp for current date/time)
