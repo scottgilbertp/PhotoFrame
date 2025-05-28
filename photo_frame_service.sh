@@ -57,7 +57,7 @@ while /bin/true; do
     elif [[ 10#$TIME -lt 10#$START_TIME ]] ; then
       # we are currently before display time, so  sleep until start time later today
       # sleep time is:
-      #  (unix timestamp for start time tomorrow) minus (unix timestamp for current date/time)
+      #  (unix timestamp for start time today) minus (unix timestamp for current date/time)
       SLEEP_TIME=$(( $(date +%s --date "today $START_TIME") - $(date +%s --date "now") ))
     else
       # we are currently after display time, so  sleep until start time tomorrow
