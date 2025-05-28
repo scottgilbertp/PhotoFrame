@@ -54,8 +54,13 @@ while /bin/true; do
     if [[ 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$STOP_TIME_ADJ ]]; then
       # we are currently inside the display time and should start immediately
       SLEEP_TIME=0
+    elif [[ 10#$TIME -lt 10#$START_TIME ]] ; then
+      # we are currently before display time, so  sleep until start time later today
+      # sleep time is:
+      #  (unix timestamp for start time tomorrow) minus (unix timestamp for current date/time)
+      SLEEP_TIME=$(( $(date +%s --date "today $START_TIME") - $(date +%s --date "now") ))
     else
-      # we are currently outside the display time and sleep until start time
+      # we are currently after display time, so  sleep until start time tomorrow
       # sleep time is:
       #  (unix timestamp for start time tomorrow) minus (unix timestamp for current date/time)
       SLEEP_TIME=$(( $(date +%s --date "tomorrow $START_TIME") - $(date +%s --date "now") ))
