@@ -50,9 +50,9 @@ while /bin/true; do
   [[ $DEBUG -eq 1 ]] && echo "TIME=$TIME"
 
   if [[ 10#$START_TIME -lt 10#$STOP_TIME_ADJ ]]; then
-    # typical start and stop within the same day
+    # Use case of: Typical start and stop within the same day
     if [[ 10#$TIME -ge 10#$START_TIME && 10#$TIME -lt 10#$STOP_TIME_ADJ ]]; then
-      # we are currently inside the display time and should start immediately
+      # we are currently within the display time and should start immediately
       SLEEP_TIME=0
     elif [[ 10#$TIME -lt 10#$START_TIME ]] ; then
       # we are currently before display time, so  sleep until start time later today
@@ -66,12 +66,12 @@ while /bin/true; do
       SLEEP_TIME=$(( $(date +%s --date "tomorrow $START_TIME") - $(date +%s --date "now") ))
     fi
   else
-    # start during one one day, run through midnight and stop the next day
+    # Use case of: Start during one day, run through midnight and stop the next day
     if  [[ 10#$TIME -ge 10#$STOP_TIME_ADJ && 10#$TIME -lt 10#$START_TIME ]]; then
       # we are currently inside the display time and should start immediately
       SLEEP_TIME=0
     else
-      # we are currently outside the display time and sleep until start time
+      # we are currently outside the display time, so sleep until start time, later today
       # sleep time is:
       #  (unix timestamp for start time today) minus (unix timestamp for current date/time)
       SLEEP_TIME=$(( $(date +%s --date "today $START_TIME") - $(date +%s --date "now") ))
