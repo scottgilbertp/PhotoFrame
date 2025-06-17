@@ -26,9 +26,15 @@ very large range of "anniversary" days.
 
 There is no provision for the display to run continuously for a multi-day
 period of time. It is assumed that the display will run for no more than 24
-hours, with a start and stop each day.  Further, the stop and start times
-are the same every day, with no provision, for example, to have different
-stop/start times on weekday vs weekends.
+hours, with a start and stop each day.  Further, the stop and start times are
+the same every day, with no provision, for example, to have different
+stop/start times on weekday vs weekends, or to not run at all on some days.
+Using systemd timers to control stop and start of display would add a lot of
+flexibility. It would also eliminate the relatively complex logic in
+photo_frame_service.sh to compute "sleep" times to the next stop/start event.
+It may be a challenge to control whether or not to display photos after a
+reboot when using timers. (basically figuring out which timer would have been
+run most recently before the reboot.  Maybe write some kind of "status" file?)
 
 Only able to access photos via filesystem.  It would be awesome to be able to
 access "cloud" photo repositories from Google, Amazon, etc. This would
