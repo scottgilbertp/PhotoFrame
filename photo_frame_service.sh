@@ -6,6 +6,20 @@
 #  absolute path)
 MYDIR="$(readlink -f ${0%/*})"
 
+# Issue warning if the difference, in minutes, between START_TIME and STOP_TIME is less
+# than MIN_RUN_MINS
+if [[ 10#$START_TIME -le 10#$STOP_TIME_ADJ ]]; then
+  # Use case of: Typical start and stop within the same day
+  if [[ $(( ( $(date +%s --date "today $STOP_TIME") - $(date +%s --date "today $START_TIME") ) / 60 )) -le $MIN_RUN_MINS ]]; then
+    echo "WARNING:  The difference between START_TIME and STOP_TIME is less than MIN_RUN_MINS: Photos will never get displayed!!"
+  fi
+else
+  # Use case of: Start during one day, run through midnight and stop the next day
+  if [[ $(( ( $(date +%s --date "tomorrow $STOP_TIME") - $(date +%s --date "today $START_TIME") ) / 60 )) -le $MIN_RUN_MINS ]]; then
+    echo "WARNING:  The difference between START_TIME and STOP_TIME is less than MIN_RUN_MINS: Photos will never get displayed!!"
+  fi
+fi
+
 # Sometimes, after booting, the NTP services have not quite set the 
 # system clock yet.  So, if uptime is less than REBOOT_UPTIME_SECONDS when
 # the service starts, we introduce a brief delay here to help ensure 

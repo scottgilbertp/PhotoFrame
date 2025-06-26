@@ -40,9 +40,3 @@ Only able to access photos via filesystem.  It would be awesome to be able to
 access "cloud" photo repositories from Google, Amazon, etc. This would
 complicate photo selection.
 
-If one were to specify a short run time (ie START_TIME and STOP_TIME are 
-not very different) AND one were to specify a MIN_RUN_MINS which was longer
-than the specified run time....ummm, I think there would be...."problems". I
-guess I'm just saying we should check that the difference between start and 
-stop time is greater than min_run_mins, and, if not, then....do something. Or
-maybe just add a warning comment to the config file.
