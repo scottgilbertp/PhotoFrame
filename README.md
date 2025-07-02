@@ -27,8 +27,16 @@ Digital Photo Frame for Raspberry Pi
 - `photo_frame_excludes.txt` - list of filepath globs to never show (may include comments preceeded with a "#")  
 - `photo_frame.service` - systemd unit file, defining the photo_frame service
 - `photo_frame_service.sh` - script which runs as the service.  Loops forever, turning display on and off
+- `README.md` - the file you are reading now
+- `BUGS.txt` - documents known flaws and limitations
 
 ### Notes:
+
+Photo selection is done in 4 stages (see photo_frame.conf for parameters to control each stage):
+- "recent" photos are selected  (photos taken within the last few days)
+- "anniversary" photos are selected.  (anniversary photos are those taken around this same date in previous years)
+- "random" photos are selected to reach the desired total number of photos for the day
+- All selected photos are shuffled and displayed in random order
 
 The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of photos. In the default config, the filename contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, suitable for display by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
 
