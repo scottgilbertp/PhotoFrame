@@ -13,7 +13,7 @@ Digital Photo Frame for Raspberry Pi
  1. Comment out the line "dtoverlay=vc4-kms-v3d" in /boot/firmware/config.txt and reboot (see notes about turning monitor on/off)
  1. Install git and dependencies:  `apt install git fbi gawk nginx`
  1. Clone this repo: `git clone https://github.com/scottgilbertp/PhotoFrame.git`
- 1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, or whatever)
+ 1. Make your photos accessible on the pi's filesystem (by copying, or NFS mount, or USB drive, etc)
  1. Edit the photo_frame.conf file to meet your needs.  In particular, you will probably need to adjust `PHOTODIR`, and maybe `START_TIME` and `STOP_TIME`
  1. Edit the photo_frame.service file, changing the file paths to match the location on your pi
  1. Copy the photo_frame.service file where systemd expects it:  `cp photo_frame.service /etc/systemd/system/`
