@@ -1,5 +1,6 @@
-This code contains a few assumptions and limitations.  
-Here I will try to document these various "flaws":
+This code has a few built-in assumptions and limitations.
+
+Here I document known flaws and limitations:
 
 For "anniversary" photo selection, photos are assumed to have the date they 
 were taken somewhere in their path.  (either in a directory named with the 
@@ -39,3 +40,9 @@ Only able to access photos via filesystem.  It would be awesome to be able to
 access "cloud" photo repositories from Google, Amazon, etc. This would
 complicate photo selection.
 
+Photo selection for the day is started at START_TIME, and can easily take a 
+few minutes (depending greatly on the total number of photos and speed of the 
+storage).  We make no attempt to compensate for this "selection time", so 
+the actual time that it starts showing photos is a few minutes after START_TIME.
+You can partially compensate for this by setting START_TIME to be a few minutes
+before the time you actually want it to start showing photos.

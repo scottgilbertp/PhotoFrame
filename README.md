@@ -18,7 +18,7 @@ Digital Photo Frame for Raspberry Pi
  1. Edit the photo_frame.service file, changing the file paths to match the location on your pi
  1. Copy the photo_frame.service file where systemd expects it:  `cp photo_frame.service /etc/systemd/system/`
  1. Tell systemd to read the new photo_frame.service file: `systemctl daemon-reload`
- 1. Start and enable the service: `systemct enable --now photo_frame.service`
+ 1. Start and enable the service: `systemctl enable --now photo_frame.service`
 
 ### Files:
 - `photo_frame.conf` - config file 
@@ -36,9 +36,9 @@ Photo selection is done in 4 stages (see photo_frame.conf for parameters to cont
 - "recent" photos are selected  (photos taken within the last few days)
 - "anniversary" photos are selected.  (anniversary photos are those taken around this same date in previous years)
 - "random" photos are selected to reach the desired total number of photos for the day
-- All selected photos are shuffled and displayed in random order
+- Duplicate photos are removed, and the results are displayed in random order
 
-The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of photos. In the default config, the filename contains the "day of month", so only one month's of log files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, suitable for display by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
+The `photo_frame_start.sh script` selects a list of photos and displays them.  It also, optionally generates a simple text list of the selected photos. In the default config, the filename contains the "day of month", so only one month's of list files are kept - with older ones being overwritten by newer ones.  Optionally, an html version of the list of photos may also be produced, made available by any webserver. In the default config, this is a simple "index.html" file, which gets overwritten each day.
 
 I run this as the root user.  IF you prefer to run it as an unpriviged user, that user will need write access to the framebuffer device (`/dev/fb0`), as well as any directory where the "todays list" files are to be written, and of course, read-access to the photos to be displayed.
 
